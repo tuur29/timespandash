@@ -14,7 +14,7 @@ import 'rxjs/add/operator/map';
 
   <mat-expansion-panel
       [expanded]="!hide"
-      (opened)="hide=false;update(undefined)"
+      (opened)="onOpenPanel()"
       (closed)="hide=true">
 
       <mat-expansion-panel-header>
@@ -132,6 +132,13 @@ export class LogsComponent implements OnInit {
     a.click();
     document.body.removeChild(a);
     
+  }
+
+  onOpenPanel() {
+    if (this.hide) {
+      this.hide = false;
+      this.update(undefined);
+    }
   }
 
   private normalize(s: string) {

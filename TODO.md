@@ -1,7 +1,6 @@
 
 - Implement old graphs
 - Define keywords (all possible combinations) outside typescript
-- Fix: stats doesnt listen to ignore date settings
 
 Edits to old Graphs:
 

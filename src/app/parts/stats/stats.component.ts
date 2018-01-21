@@ -11,7 +11,7 @@ import { parse } from './parse';
 
   <mat-expansion-panel
       [expanded]="!hide"
-      (opened)="hide=false;update(undefined)"
+      (opened)="onOpenPanel()"
       (closed)="hide=true">
 
       <mat-expansion-panel-header>
@@ -109,6 +109,13 @@ export class StatsComponent implements OnInit {
   showLog(l: number) {
     if (l > -1)
       this.onStatClick.emit(l);
+  }
+
+  onOpenPanel() {
+    if (this.hide) {
+      this.hide = false;
+      this.update(undefined);
+    }
   }
   
 }
