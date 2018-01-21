@@ -31,7 +31,7 @@ import { parse } from './parse';
           <p>Or drop a text (file) in the correct format here.</p>
 
 
-          <app-settings *ngIf="!firsttime" [settings]="settings"
+          <app-settings *ngIf="!firsttime" [settings]="settings" panelName="home"
             (onSettingsChange)="onSettingsChange($event)"></app-settings>
         </mat-card>
       </div>
@@ -111,7 +111,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     // set default dataset for dev
-    // this.onKeywordsChange({value: "boot,shut"})
+    this.onKeywordsChange({value: "boot,shut"})
   }
 
   getData(keywords?: string[], force = false) {

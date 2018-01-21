@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GlobalsService } from 'app/services/globals.service';
-import { LocalStorage, LocalStorageService, WebstorableArray } from 'ngx-store';
+import { LocalStorageService } from 'ngx-store';
 import { Setting } from 'app/models/setting';
 
 
@@ -10,8 +10,8 @@ import { Setting } from 'app/models/setting';
 
     <mat-expansion-panel
       [expanded]="!hide"
-      (opened)="hide=false"
-      (closed)="hide=true">
+      (opened)="hide=false;toggled()"
+      (closed)="hide=true;toggled()">
 
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -75,13 +75,11 @@ import { Setting } from 'app/models/setting';
 })
 export class SettingsComponent implements OnInit {
 
+  @Input() panelName: string = "";
+  @Input() settings: Setting[] = [];
   @Output() onSettingsChange = new EventEmitter<Setting[]>();
 
-  // TODO: seperate variables for each setting panel
-  @Input() settings: Setting[] = [];
-
-  @LocalStorage("hideSettings") hide = false;
-
+  hide = false;
   keys = Object.keys;
 
   constructor(
@@ -89,7 +87,15 @@ export class SettingsComponent implements OnInit {
     private localStorageService: LocalStorageService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    let h = this.localStorageService.get('hideSettings'+this.panelName);
+    if (h)
+      this.hide = h;
+  }
+
+  toggled() {
+    this.localStorageService.set('hideSettings'+this.panelName, this.hide);
+  }
 
   onCheckToggle(i: number) {
     this.settings[i].enabled = !this.settings[i].enabled;
