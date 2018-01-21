@@ -1,6 +1,5 @@
 
 - Implement old graphs
-- Parse data in sepearate threads
 - Define keywords (all possible combinations) outside typescript
 
 Edits to old Graphs:
