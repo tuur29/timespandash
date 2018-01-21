@@ -20,7 +20,7 @@ import 'rxjs/add/operator/map';
       <mat-expansion-panel-header>
         <mat-panel-title>
           <h1>Logs
-            <span (click)="onExportParsed($event)"><mat-icon matTooltip="Export parsed">file_download</mat-icon></span>
+            <span *ngIf="!hide" (click)="onExportParsed($event)"><mat-icon matTooltip="Export parsed">file_download</mat-icon></span>
           </h1>
         </mat-panel-title>
       </mat-expansion-panel-header>
