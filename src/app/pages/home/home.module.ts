@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 
 import { MaterialModule } from '../../material.module';
 
-import { SettingsModule } from '../../parts/settings/settings.module';
-import { LogsModule } from '../../parts/logs/logs.module';
-import { StatsModule } from '../../parts/stats/stats.module';
 import { HomeComponent } from './home.component';
+import { SettingsModule } from '../../parts/settings/settings.module';
+import { StatsModule } from '../../parts/stats/stats.module';
+import { LogsModule } from '../../parts/logs/logs.module';
+import { GBarDOWModule } from '../../parts/gbar_dow/gbar_dow.module';
 
 @NgModule({
   imports: [
@@ -18,8 +19,9 @@ import { HomeComponent } from './home.component';
     MaterialModule,
 
     SettingsModule,
+    StatsModule,
     LogsModule,
-    StatsModule
+    GBarDOWModule,
   ],
   declarations: [
     HomeComponent
