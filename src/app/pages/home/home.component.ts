@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     // set default dataset for dev
-    this.onKeywordsChange({value: "boot,shut"})
+    this.onKeywordsChange({value: "sleep,wake"})
   }
 
   getData(keywords?: string[], force = false) {
