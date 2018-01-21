@@ -32,11 +32,8 @@ export function parse(spans: Timespan[], settings?: any) {
         1 : span.getLength() / (60*60*1000); // convert to hours;
     }
 
-    if (settings.avgvalue.getSetting())
-      for (let i=0;i<data.length;i++)
-        data[i].yVal = data[i].yVal / spans.length;
-
     return data;
+
 
   } else if (bargraph == "Times of day") {
     // TIMES OF DAY
@@ -55,11 +52,8 @@ export function parse(spans: Timespan[], settings?: any) {
         1 : span.getLength() / (60*60*1000); // convert to hours;
     }
 
-    if (settings.avgvalue.getSetting())
-      for (let i=0;i<data.length;i++)
-        data[i].yVal = data[i].yVal / spans.length;
-
     return data;
+
 
   } else if (bargraph == "Months of year") {
     // MONTHS OF YEAR
@@ -69,9 +63,10 @@ export function parse(spans: Timespan[], settings?: any) {
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     ];
     let data = Array.from(new Array(months.length),(v,i)=>{
-      return {name: months[i], yVal: 0, color: color}
+      return {name: months[i], yVal: 0, color: color, count: 0 }
     });
 
+    let prevMonth = -1;
     for (let i=0;i<spans.length;i++) {
       let span = spans[i];
       let index = settings.centercount.getSetting() ? 
@@ -80,22 +75,29 @@ export function parse(spans: Timespan[], settings?: any) {
 
       data[index].yVal += settings.timescount.getSetting() ?
         1 : span.getLength() / (60*60*1000); // convert to hours;
+
+      if (settings.avgvaluemon.getSetting() && prevMonth != index) {
+        data[index].count++;
+        prevMonth = index;
+      }
     }
 
-    if (settings.avgvalue.getSetting())
+    if (settings.avgvaluemon.getSetting())
       for (let i=0;i<data.length;i++)
-        data[i].yVal = data[i].yVal / spans.length;
-
+        data[i].yVal = data[i].yVal / data[i].count;
+    
     return data;
+    
 
   } else if (bargraph == "Years") {
     // YEARS
     let firstyear = spans[spans.length-1].start.getFullYear();
     let lastyear = spans[0].end.getFullYear();
     let data = Array.from(new Array(lastyear-firstyear+1),(v,i)=>{
-      return {name: i+firstyear, yVal: 0, color: color}
+      return {name: i+firstyear, yVal: 0, color: color, count: 0 }
     });
 
+    let prevMonth = -1;
     for (let i=0;i<spans.length;i++) {
       let span = spans[i];
       let index = settings.centercount.getSetting() ? 
@@ -104,11 +106,23 @@ export function parse(spans: Timespan[], settings?: any) {
 
       data[index-firstyear].yVal += settings.timescount.getSetting() ?
         1 : span.getLength() / (60*60*1000); // convert to hours;
+
+      if (settings.avgvaluemon.getSetting()) {
+        let month = settings.centercount.getSetting() ? 
+          span.getCenter().getMonth()
+          : span.start.getMonth();
+        if (prevMonth != month) {
+          data[index-firstyear].count++;
+          prevMonth = month;
+        }
+      }
     }
 
-    if (settings.avgvalue.getSetting())
+    console.log(data);
+
+    if (settings.avgvaluemon.getSetting())
       for (let i=0;i<data.length;i++)
-        data[i].yVal = data[i].yVal / spans.length;
+        data[i].yVal = data[i].yVal / data[i].count;
 
     return data;
 

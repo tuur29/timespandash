@@ -59,7 +59,7 @@ export class BarGraphComponent implements OnInit {
     bargraph: new Setting("Select type","select",this.options[0],true,this.options),
     timescount: new Setting("Count number of timespans instead of length"),
     centercount: new Setting("Use center of timespan instead of start"),
-    avgvalue: new Setting("Use average value instead of total"),
+    avgvaluemon: new Setting("Weigh data based on months (Months & Years only)"),
   };
 
   private d3: D3;
