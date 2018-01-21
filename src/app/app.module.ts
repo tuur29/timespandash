@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { routes, PreloadSelectedModulesList } from './app.routing';
 import { RouterModule } from '@angular/router';
 import { WebStorageModule } from 'ngx-store';
+import { D3Service } from 'd3-ng2-service';
 
 import { environment } from '../environments/environment';
 
@@ -40,6 +41,7 @@ import { MessagesModule } from './messages/messages.module';
     ErrorModule
   ],
   providers: [
+    D3Service,
     PreloadSelectedModulesList,
     CanDeactivateGuard,
     GlobalsService,
