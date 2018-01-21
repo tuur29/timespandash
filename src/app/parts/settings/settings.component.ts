@@ -24,12 +24,23 @@ import { Setting } from 'app/models/setting';
 
             <div *ngFor="let i of keys(settings)">
 
-              <mat-checkbox [checked]="settings[i].enabled" (change)="onCheckToggle(i)">
+              <mat-checkbox *ngIf="settings[i].type!='select'" [checked]="settings[i].enabled" (change)="onCheckToggle(i)">
                 {{ settings[i].description }}
               </mat-checkbox>
 
               <mat-form-field *ngIf="settings[i].type">
-                <input matInput [type]="settings[i].type" [value]="settings[i].value" [disabled]="!settings[i].enabled" (change)="onValueChange(i, $event)" />
+
+                <mat-select *ngIf="settings[i].type=='select'; else fallback"
+                  (change)="onSelect(i, $event)"
+                  [placeholder]="settings[i].description">
+                  <mat-option *ngFor="let j of settings[i].options" [value]="j">
+                    {{j}}
+                  </mat-option>
+                </mat-select>
+
+                <ng-template #fallback>
+                  <input matInput [type]="settings[i].type" [value]="settings[i].value" [disabled]="!settings[i].enabled" (change)="onValueChange(i, $event)" />
+                </ng-template>
               </mat-form-field>
               <ng-container *ngIf="settings[i].type == 'number'">min</ng-container>
 
@@ -104,6 +115,11 @@ export class SettingsComponent implements OnInit {
 
   onValueChange(i: number, event: any) {
     this.settings[i].value = event.target.value;
+    this.submit();
+  }
+
+  onSelect(i: number, event: any) {
+    this.settings[i].value = event.value;
     this.submit();
   }
 
