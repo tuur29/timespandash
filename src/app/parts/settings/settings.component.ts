@@ -1,0 +1,114 @@
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { GlobalsService } from 'app/services/globals.service';
+import { LocalStorage, LocalStorageService, WebstorableArray } from 'ngx-store';
+import { Setting } from 'app/models/setting';
+
+
+@Component({
+  selector: 'app-settings',
+  template: `
+
+    <mat-expansion-panel
+      [expanded]="!hide"
+      (opened)="hide=false"
+      (closed)="hide=true">
+
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <h2>Settings</h2>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+        <!-- Content -->
+        <form>
+
+            <div *ngFor="let i of keys(settings)">
+
+              <mat-checkbox [checked]="settings[i].enabled" (change)="onCheckToggle(i)">
+                {{ settings[i].description }}
+              </mat-checkbox>
+
+              <mat-form-field *ngIf="settings[i].type">
+                <input matInput [type]="settings[i].type" [value]="settings[i].value" [disabled]="!settings[i].enabled" (change)="onValueChange(i, $event)" />
+              </mat-form-field>
+              <ng-container *ngIf="settings[i].type == 'number'">min</ng-container>
+
+            </div>
+
+            <button type="button" (click)="onReset()" mat-button color="primary">
+              <mat-icon>refresh</mat-icon> Reset
+            </button>
+          
+        </form>
+
+      </mat-expansion-panel>
+
+  `,
+  styles: [`
+
+    mat-expansion-panel {
+      margin-top: 20px;
+    }
+
+    .mat-expansion-panel-header-title h2, button {
+      margin-top: 16px;
+    }
+
+    :host ::ng-deep .mat-expansion-panel-body {
+      padding-bottom: 20px;
+    }
+
+    label {
+      display: block;
+    }
+
+    button {
+      float: right;
+    }
+
+    mat-form-field {
+      margin-left: 30px;
+      max-width: 135px;
+    }
+
+  `]
+})
+export class SettingsComponent implements OnInit {
+
+  @Output() onSettingsChange = new EventEmitter<Setting[]>();
+
+  // TODO: seperate variables for each setting panel
+  @Input() settings: Setting[] = [];
+
+  @LocalStorage("hideSettings") hide = false;
+
+  keys = Object.keys;
+
+  constructor(
+    public globals: GlobalsService,
+    private localStorageService: LocalStorageService
+  ) {}
+
+  ngOnInit() {}
+
+  onCheckToggle(i: number) {
+    this.settings[i].enabled = !this.settings[i].enabled;
+    this.submit();
+  }
+
+  onValueChange(i: number, event: any) {
+    this.settings[i].value = event.target.value;
+    this.submit();
+  }
+
+  onReset() {
+    for (let i in this.settings)
+      this.settings[i].reset();
+    this.submit();
+  }
+
+  submit() {
+    this.onSettingsChange.emit(this.settings);
+  }
+
+}

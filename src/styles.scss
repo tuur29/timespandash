@@ -1,0 +1,125 @@
+
+// MATERIAL THEME
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+$app-primary: mat-palette($mat-teal, 400);
+$app-accent: mat-palette($mat-teal, 700);
+$app-warn: mat-palette($mat-red, 800);
+$app-theme: mat-dark-theme($app-primary, $app-accent, $app-warn);
+
+@include angular-material-theme($app-theme);
+
+// GLOBAL STYLES
+
+body {
+  font-family: sans-serif;
+  color: darken(mat-color(map-get($app-theme, foreground), base), 1);
+  background: mat-color(map-get($app-theme, background), background);
+  margin: 0;
+}
+
+a:link {
+	color: mat-color($app-accent, 700);
+	text-decoration: none;
+}
+
+a:link:hover {
+	text-decoration: underline;
+}
+
+a:visited {
+	color: mat-color($app-accent, 400);
+}
+
+a.dark:link {
+	color: mat-color($app-primary, 700);
+}
+
+a.dark:visited {
+	color: mat-color($app-primary, 400);
+}
+
+.dragover {
+	outline: 4px solid rgba(mat-color($app-primary, 500), 0.5);
+}
+
+mat-card.small {
+	max-width: 550px;
+}
+
+mat-card.full {
+	padding: 0;
+}
+
+mat-card.search {
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+.mat-form-field.ng-invalid.ng-touched {
+	color: mat-color($app-warn, 600);
+}
+
+.mat-expansion-panel .mat-expansion-panel,
+.mat-card .mat-expansion-panel {
+	box-shadow: none !important;
+}
+
+.color-primary {
+	color: mat-color($app-primary, 400) !important;
+}
+
+.color-accent {
+	color: mat-color($app-accent, 400) !important;
+}
+
+.color-warn {
+	color: mat-color($app-warn, 800) !important;
+}
+
+.color-green {
+	color: mat-color($mat-green, 800) !important;
+}
+
+.loader {
+	animation: 0.75s ease-in-out fadeIn;
+}
+
+.loader .cdk-overlay-backdrop {
+	background: black;
+}
+
+@keyframes fadeIn {
+   0% {
+      opacity: 0;
+   }
+   100% {
+      opacity: 1;
+   }
+}
+
+.loader.cdk-overlay-container mat-spinner {
+	position: relative;
+	top: calc( 50% - 50px );
+	left: calc( 50% - 50px );
+}
+
+.spacer {
+	flex: 1 1 auto;
+}
+
+.full-width {
+	width: 100%;
+}
+
+mat-icon {
+	vertical-align: middle;
+}
+
+@media print {
+	mat-card {
+		box-shadow: none !important;
+	}
+}
