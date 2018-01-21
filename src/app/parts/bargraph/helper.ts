@@ -116,6 +116,11 @@ export function parse(spans: Timespan[], settings?: any) {
 
 }
 
+
+
+
+
+
 export function draw(svg: any, data: any, d3: any) {
 
   let padding: number = 35;
@@ -145,7 +150,7 @@ export function draw(svg: any, data: any, d3: any) {
 
     graph.append("g")
       .attr("class", "axis")
-      .attr("transform", "translate(" + (padding) + "," + padding + ")")
+      .attr("transform", "translate(" + padding + "," + padding + ")")
       .call(yAxis);
 
      graph.append('g')
@@ -171,6 +176,78 @@ export function draw(svg: any, data: any, d3: any) {
       .append('svg:title')
         .text((d) => d.name + ": " + round(d.yVal) + " hours");
 
+
+    // Trendline
+
+    // get the x and y values for least squares
+    let xLabels = data.map((d) => d.name);
+    let xSeries = d3.range(1, xLabels.length + 1);
+    let ySeries = data.map((d) =>parseFloat(d.yVal));
+    
+    let leastSquaresCoeff = leastSquares(xSeries, ySeries);
+    
+    // apply the reults of the least squares regression
+    let x1 = xLabels[0];
+    let y1 = leastSquaresCoeff[0] + leastSquaresCoeff[1];
+    let x2 = xLabels[xLabels.length - 1];
+    let y2 = leastSquaresCoeff[0] * xSeries.length + leastSquaresCoeff[1];
+    let trendData = [[x1,y1,x2,y2]];
+    let trendline = graph.selectAll(".trendline").data(trendData);
+      
+    trendline.enter()
+      .append("line")
+      .attr("class", "trendline")
+      .attr("x1",(d) => xScale(d[0]))
+      .attr("y1",(d) => yScale(d[1]))
+      .attr("x2",(d) => xScale(d[2]))
+      .attr("y2",(d) => yScale(d[3]))
+      .attr("stroke", "white")
+      .attr("stroke-width", 1)
+      .attr("transform","translate(" 
+        + (padding + 2*rectWidth/3 ) + "," + padding + ")");
+    
+    // // display equation on the chart
+    // graph.append("text")
+    //   .text("eq: " + round(leastSquaresCoeff[0])
+    //     + "x + " + round(leastSquaresCoeff[1]))
+    //   .attr("fill", "white")
+    //   .attr("class", "text-label")
+    //   .attr("x", (d) => xScale(x2)-60 )
+    //   .attr("y", (d) => yScale(y2)-30 )
+    //   .attr("transform","translate(" 
+    //     + (padding ) + "," + (padding - 5) + ")");
+    
+    // // display r-square on the chart
+    // graph.append("text")
+    //   .text("r-sq: " + round(leastSquaresCoeff[2]))
+    //   .attr("fill", "white")
+    //   .attr("class", "text-label")
+    //   .attr("x", (d) => xScale(x2)-60 )
+    //   .attr("y", (d) => yScale(y2)-10 )
+    //   .attr("transform","translate(" 
+    //     + (padding ) + "," + (padding - 5) + ")");
+
    }
+
+   function leastSquares(xSeries, ySeries) {
+    let reduceSumFunc = (prev, cur) => prev + cur;
+    
+    let xBar = xSeries.reduce(reduceSumFunc) * 1.0 / xSeries.length;
+    let yBar = ySeries.reduce(reduceSumFunc) * 1.0 / ySeries.length;
+    let ssXX = xSeries.map((d) => Math.pow(d - xBar, 2))
+      .reduce(reduceSumFunc);
+    
+    let ssYY = ySeries.map((d) => Math.pow(d - yBar, 2))
+      .reduce(reduceSumFunc);
+      
+    let ssXY = xSeries.map((d, i) => (d - xBar) * (ySeries[i] - yBar))
+      .reduce(reduceSumFunc);
+      
+    let slope = ssXY / ssXX;
+    let intercept = yBar - (xBar * slope);
+    let rSquare = Math.pow(ssXY, 2) / (ssXX * ssYY);
+    
+    return [slope, intercept, rSquare];
+  }
 
 }
