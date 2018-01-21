@@ -11,10 +11,10 @@ import { parse } from './parse';
 
   <mat-expansion-panel
       [expanded]="!hide"
-      (opened)="hide=false"
+      (opened)="hide=false;update(undefined)"
       (closed)="hide=true">
 
-      <mat-expansion-panel-header (click)="update()">
+      <mat-expansion-panel-header>
         <mat-panel-title>
           <h1>Stats</h1>
         </mat-panel-title>
@@ -77,11 +77,9 @@ export class StatsComponent implements OnInit {
   stats: Stat[] = [];
 
   constructor() {}
-
   ngOnInit() {}
 
   update(timespans?: Timespan[]) {
-
 
     if (timespans != undefined)
       this.timespans = timespans;

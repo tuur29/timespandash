@@ -14,8 +14,7 @@ import 'rxjs/add/operator/map';
 
   <mat-expansion-panel
       [expanded]="!hide"
-      (click)="update(undefined)"
-      (opened)="hide=false"
+      (opened)="hide=false;update(undefined)"
       (closed)="hide=true">
 
       <mat-expansion-panel-header>
