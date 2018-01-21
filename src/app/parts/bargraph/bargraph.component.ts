@@ -7,7 +7,7 @@ import { parse, draw } from './helper';
 
 
 @Component({
-  selector: 'app-gbardow',
+  selector: 'app-bargraph',
   template: `
 
   <mat-expansion-panel
@@ -24,7 +24,7 @@ import { parse, draw } from './helper';
         <!-- Content -->
         <svg width="400" height="250"></svg>
 
-        <app-settings [settings]="settings" panelName="gbardow"
+        <app-settings [settings]="settings" panelName="bargraph"
           (onSettingsChange)="onSettingsChange($event)"></app-settings>
 
     </mat-expansion-panel>
@@ -47,9 +47,9 @@ import { parse, draw } from './helper';
 
   `]
 })
-export class GBarDOWComponent implements OnInit {
+export class BarGraphComponent implements OnInit {
 
-  @LocalStorage("hideGBarDOW") hide = true;
+  @LocalStorage("hideBarGraph") hide = true;
   timespans: Timespan[];
   settings = {
     timescount: new Setting("Count number of timespans instead of length"),

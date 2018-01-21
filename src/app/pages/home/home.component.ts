@@ -45,7 +45,7 @@ import { parse } from './parse';
       </div>
 
       <div [style.display]="!firsttime ? 'block' : 'none'">
-        <app-gbardow #gbardow></app-gbardow>
+        <app-bargraph #bargraph></app-bargraph>
       </div>
       
 
@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('stats') stats;
   @ViewChild('logs') logs;
-  @ViewChild('gbardow') gbardow;
+  @ViewChild('bargraph') bargraph;
 
   firsttime = true;
   dragover;
@@ -131,7 +131,7 @@ export class HomeComponent implements OnInit {
 
     this.stats.update(spans);
     this.logs.update(spans);
-    this.gbardow.update(spans);
+    this.bargraph.update(spans);
   }
 
   // Event Listeners

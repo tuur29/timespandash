@@ -8,7 +8,7 @@ import { HomeComponent } from './home.component';
 import { SettingsModule } from '../../parts/settings/settings.module';
 import { StatsModule } from '../../parts/stats/stats.module';
 import { LogsModule } from '../../parts/logs/logs.module';
-import { GBarDOWModule } from '../../parts/gbar_dow/gbar_dow.module';
+import { BarGraphModule } from '../../parts/bargraph/bargraph.module';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ import { GBarDOWModule } from '../../parts/gbar_dow/gbar_dow.module';
     SettingsModule,
     StatsModule,
     LogsModule,
-    GBarDOWModule,
+    BarGraphModule,
   ],
   declarations: [
     HomeComponent
