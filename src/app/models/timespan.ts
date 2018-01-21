@@ -20,6 +20,11 @@ export class Timespan {
     return new Date(Math.round((this.end.getTime()-this.start.getTime())/2) + this.start.getTime());
   }
 
+  static cloneArray(timespans: Timespan[]): Timespan[] {
+    return timespans.slice(0).map(t => 
+        new Timespan(t.line,t.start,t.end));
+  }
+
   // PRINTING
 
   printDate(): string {

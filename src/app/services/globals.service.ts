@@ -30,7 +30,7 @@ export class GlobalsService {
     if (!force && this.cachedtimespans.length > 0
          && keywords[0] == this.cachedrequest[0]
          && keywords[1] == this.cachedrequest[1]) {
-      return Observable.of( this.clone(this.cachedtimespans) );
+      return Observable.of( Timespan.cloneArray(this.cachedtimespans) );
     }
 
     if (!force && this.cachedplaintext != ""
@@ -54,12 +54,7 @@ export class GlobalsService {
     this.cachedplaintext = res;
     this.cachedtimespans = parse(this.cachedplaintext, settings);
     this.loading = false;
-    return this.clone(this.cachedtimespans)
-  }
-
-  private clone(timespans: Timespan[]): Timespan[] {
-    return this.cachedtimespans.slice(0).map(t => 
-        new Timespan(t.line,t.start,t.end));
+    return Timespan.cloneArray(this.cachedtimespans)
   }
 
 }
