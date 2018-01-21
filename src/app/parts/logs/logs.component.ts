@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalStorage } from 'ngx-store';
 import { removeDiacritics } from 'removeDiacritics';
 import { Timespan } from 'app/models/timespan';

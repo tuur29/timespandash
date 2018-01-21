@@ -4,10 +4,6 @@ import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
 import { parse } from './parse';
 
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-stats',

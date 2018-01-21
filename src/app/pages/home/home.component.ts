@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GlobalsService } from 'app/services/globals.service';
-import { LocalStorage } from 'ngx-store';
 import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
 import { parse } from './parse';
