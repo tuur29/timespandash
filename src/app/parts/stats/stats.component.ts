@@ -15,11 +15,10 @@ import 'rxjs/add/operator/map';
 
   <mat-expansion-panel
       [expanded]="!hide"
-      (click)="update()"
       (opened)="hide=false"
       (closed)="hide=true">
 
-      <mat-expansion-panel-header>
+      <mat-expansion-panel-header (click)="update()">
         <mat-panel-title>
           <h1>Stats</h1>
         </mat-panel-title>
@@ -86,6 +85,7 @@ export class StatsComponent implements OnInit {
   ngOnInit() {}
 
   update(timespans?: Timespan[]) {
+
 
     if (timespans != undefined)
       this.timespans = timespans;

@@ -2,7 +2,6 @@
 - Implement old graphs
 - Parse data in sepearate threads
 - Define keywords (all possible combinations) outside typescript
-- Fix: stats update to wrong values when clicking on line number
 
 Edits to old Graphs:
 
