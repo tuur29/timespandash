@@ -47,15 +47,15 @@ import { exportsvg } from 'd3helper';
 
     :host ::ng-deep .axis line,
     :host ::ng-deep .axis path {
-      stroke: #333;
+      stroke: #222;
     }
     
     :host ::ng-deep .trendline {
-      stroke: #aaa;
+      stroke: #eee;
       
     }
     :host ::ng-deep .line {
-      stroke: #eee;
+      stroke: #26A69A;
       fill: none;
     }
 

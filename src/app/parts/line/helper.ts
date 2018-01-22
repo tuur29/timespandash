@@ -6,9 +6,7 @@ import { convertTime, formatTime, round } from 'convertTime';
 export function parse(spans: Timespan[], settings?: any) {
 
   // ! If you want to edit 'spans' you must clone with Timespan.cloneArray()
-  let color = "#26A69A";
   let data = [];
-
   for (let i=0;i<spans.length;i++) {
     let span = spans[i];
     let date = new Date(span.getCenter().toISOString().substring(0, 10));
