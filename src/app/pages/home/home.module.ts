@@ -9,6 +9,7 @@ import { SettingsModule } from '../../parts/settings/settings.module';
 import { StatsModule } from '../../parts/stats/stats.module';
 import { LogsModule } from '../../parts/logs/logs.module';
 import { BarGraphModule } from '../../parts/bargraph/bargraph.module';
+import { PieModule } from '../../parts/pie/pie.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { BarGraphModule } from '../../parts/bargraph/bargraph.module';
     StatsModule,
     LogsModule,
     BarGraphModule,
+    PieModule,
   ],
   declarations: [
     HomeComponent

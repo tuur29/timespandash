@@ -1,0 +1,151 @@
+
+import { Timespan } from 'app/models/timespan';
+import { Setting } from 'app/models/setting';
+import { convertTime, formatTime, round } from 'convertTime';
+
+export function parse(spans: Timespan[], settings?: any) {
+
+  // ! If you want to edit 'spans' you must clone with Timespan.cloneArray()
+  let color = "#26A69A";
+  let piechart = settings.piechart.getSetting();
+  
+  if (piechart == "Day of week") {
+    // DAY OF WEEK
+
+    let data = [
+      {name: "Mon", yVal: 0, color: color},
+      {name: "Tue", yVal: 0, color: color},
+      {name: "Wed", yVal: 0, color: color},
+      {name: "Thu", yVal: 0, color: color},
+      {name: "Fri", yVal: 0, color: color},
+      {name: "Sat", yVal: 0, color: color},
+      {name: "Sun", yVal: 0, color: color}
+    ]
+
+    for (let i=0;i<spans.length;i++) {
+      let span = spans[i];
+      let index = settings.centercount.getSetting() ? 
+        span.getCenter().getDay()
+        : span.start.getDay();
+
+      data[index].yVal += settings.timescount.getSetting() ?
+        1 : span.getLength() / (60*60*1000); // convert to hours;
+    }
+
+    return data;
+
+
+  } else if (piechart == "Times of day") {
+    // TIMES OF DAY
+    
+    let data = Array.from(new Array(24),(v,i)=>{
+      return {name: i, yVal: 0, color: color}
+    });
+
+    for (let i=0;i<spans.length;i++) {
+      let span = spans[i];
+      let index = settings.centercount.getSetting() ? 
+        span.getCenter().getHours()
+        : span.start.getHours();
+
+      data[index].yVal += settings.timescount.getSetting() ?
+        1 : span.getLength() / (60*60*1000); // convert to hours;
+    }
+
+    return data;
+
+
+  } else if (piechart == "Months of year") {
+    // MONTHS OF YEAR
+
+    var months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    let data = Array.from(new Array(months.length),(v,i)=>{
+      return {name: months[i], yVal: 0, color: color, count: 0 }
+    });
+
+    let prevMonth = -1;
+    for (let i=0;i<spans.length;i++) {
+      let span = spans[i];
+      let index = settings.centercount.getSetting() ? 
+        span.getCenter().getMonth()
+        : span.start.getMonth();
+
+      data[index].yVal += settings.timescount.getSetting() ?
+        1 : span.getLength() / (60*60*1000); // convert to hours;
+
+      if (settings.avgvaluemon.getSetting() && prevMonth != index) {
+        data[index].count++;
+        prevMonth = index;
+      }
+    }
+
+    if (settings.avgvaluemon.getSetting())
+      for (let i=0;i<data.length;i++)
+        data[i].yVal = data[i].yVal / data[i].count;
+
+    return data;
+  }
+
+}
+
+
+
+
+
+
+export function draw(svg: any, data: any, d3: any) {
+
+  let padding: number = 35;
+  let width: number = svg.width.baseVal.value;
+  let height: number = svg.height.baseVal.value;
+
+  if (svg !== null) {
+
+    let graph = d3.select(svg);
+    graph.text('');
+
+    let radius = Math.min(width, height) / 2,
+        g = graph.append("g")
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+    var color = d3.scaleLinear().domain([1,data.length])
+      .interpolate(d3.interpolateHcl)
+      .range([d3.rgb("#ff0000"), d3.rgb('#0000ff')]);
+
+    var pie = d3.pie()
+        .sort(null)
+        .value((d) => d.yVal);
+
+    var path = d3.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(15)
+        .cornerRadius(4)
+        .padAngle(.06);
+
+    var label = d3.arc()
+        .outerRadius(radius - 60)
+        .innerRadius(radius - 40);
+
+    var arc = g.selectAll(".arc")
+      .data(pie(data))
+      .enter().append("g")
+        .attr("class", "arc");
+
+    arc.append("path")
+        .attr("d", path)
+        .attr("fill", (d,i) => color(i))
+        .append('svg:title')
+          .text((d) => d.data.name + ": " + round(d.data.yVal) + " hours");
+
+    arc.append("text")
+        .attr("transform", (d) => "translate(" + label.centroid(d) + ")")
+        .attr("dy", "0.35em")
+        .attr("fill", "#eee")
+        .text((d) => d.data.name);
+
+   }
+
+}
