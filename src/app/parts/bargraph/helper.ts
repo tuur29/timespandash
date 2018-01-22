@@ -44,12 +44,17 @@ export function parse(spans: Timespan[], settings?: any) {
 
     for (let i=0;i<spans.length;i++) {
       let span = spans[i];
-      let index = settings.centercount.getSetting() ? 
-        span.getCenter().getHours()
-        : span.start.getHours();
+      if (settings.counteachhour.getSetting()) {
+        for (let j=span.start.getTime();j<=span.end.getTime();j+=60*60*1000)
+          data[(new Date(j)).getHours()].yVal += 1;
+      } else {
 
-      data[index].yVal += settings.timescount.getSetting() ?
-        1 : span.getLength() / (60*60*1000); // convert to hours;
+        let index = settings.centercount.getSetting() ? 
+          span.getCenter().getHours()
+          : span.start.getHours();
+        data[index].yVal += settings.timescount.getSetting() ?
+          1 : span.getLength() / (60*60*1000); // convert to hours;
+      }
     }
 
     return data;

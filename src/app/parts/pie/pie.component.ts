@@ -51,6 +51,7 @@ export class PieComponent implements OnInit {
     piechart: new Setting("Select type","select",this.options[0],true,this.options),
     timescount: new Setting("Count number of timespans instead of length"),
     centercount: new Setting("Use center of timespan instead of start"),
+    counteachhour: new Setting("Count each hour between start & end (Hours only)"),
     avgvaluemon: new Setting("Weigh data based on months (Months & Years only)"),
   };
 
