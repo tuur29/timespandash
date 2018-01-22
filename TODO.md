@@ -3,6 +3,7 @@
 - Define keywords (all possible combinations) outside typescript
 - Use masonry or alternative instead of flexbox
 - Add demo to github pages with mock data
+- Make sure other graphs work if error occures on other one
 
 Edits to (old) Graphs:
 

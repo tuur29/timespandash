@@ -141,10 +141,10 @@ export function parse(spans: Timespan[], settings?: any) {
 export function draw(svg: any, data: any, d3: any) {
 
   let padding: number = 35;
-  let width: number = svg.width.baseVal.value;
-  let height: number = svg.height.baseVal.value;
 
   if (svg !== null) {
+    let width: number = svg.width.baseVal.value;
+    let height: number = svg.height.baseVal.value;
 
     let graph = d3.select(svg);
     graph.text('');

@@ -40,8 +40,6 @@ export function parse(spans: Timespan[], settings?: any) {
 export function draw(svg: any, data: any, d3: any, settings: any) {
 
   let padding: number = 35;
-  let width: number = svg.width.baseVal.value;
-  let height: number = svg.height.baseVal.value;
   let curves = {
     curveLinear: d3.curveLinear,
     curveStep: d3.curveStep,
@@ -52,6 +50,8 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
   }
 
   if (svg !== null) {
+    let width: number = svg.width.baseVal.value;
+    let height: number = svg.height.baseVal.value;
 
     let x = d3.scaleTime()
       .domain(d3.extent(data, (d) => d.date))
