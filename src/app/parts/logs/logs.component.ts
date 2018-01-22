@@ -119,9 +119,13 @@ export class LogsComponent implements OnInit {
     }
   }
 
-  goToLine(l: number) {
-    if (!this.hide)
-      this.logsCtrl.setValue("("+l+")");
+  search(query: any) {
+    if (this.hide)
+      this.onOpenPanel();
+
+    setTimeout(() => {
+      this.logsCtrl.setValue(query);
+    }, 100);
   }
 
   onExportParsed(event: any) {

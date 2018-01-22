@@ -164,7 +164,7 @@ export class HomeComponent implements OnInit {
   }
 
   onStatClick(l: number) {
-    this.logs.goToLine(l);
+    this.logs.search("("+l+")");
   }
 
   onFileDrop(event: any) {
