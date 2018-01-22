@@ -1,5 +1,5 @@
 
-- Implement old graphs (Calendar, Box)
+- Implement old graphs (Box)
 - Define keywords (all possible combinations) outside typescript
 - Use masonry or alternative instead of flexbox
 - Add demo to github pages with mock data

@@ -55,6 +55,10 @@ import { parse } from './parse';
       <div [style.display]="!firsttime ? 'block' : 'none'">
         <app-line #line></app-line>
       </div>
+
+      <div [style.display]="!firsttime ? 'block' : 'none'">
+        <app-calendar #calendar (onDayClick)="onDayClick($event)"></app-calendar>
+      </div>
       
 
     </div>
@@ -106,6 +110,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('bargraph') bargraph;
   @ViewChild('pie') pie;
   @ViewChild('line') line;
+  @ViewChild('calendar') calendar;
 
   firsttime = true;
   dragover;
@@ -144,6 +149,7 @@ export class HomeComponent implements OnInit {
     this.bargraph.update(spans);
     this.pie.update(spans);
     this.line.update(spans);
+    this.calendar.update(spans);
   }
 
   // Event Listeners
@@ -165,6 +171,10 @@ export class HomeComponent implements OnInit {
 
   onStatClick(l: number) {
     this.logs.search("("+l+")");
+  }
+
+  onDayClick(date: string) {
+    this.logs.search(date);
   }
 
   onFileDrop(event: any) {

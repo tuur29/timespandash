@@ -11,6 +11,7 @@ import { LogsModule } from '../../parts/logs/logs.module';
 import { BarGraphModule } from '../../parts/bargraph/bargraph.module';
 import { PieModule } from '../../parts/pie/pie.module';
 import { LineModule } from '../../parts/line/line.module';
+import { CalendarModule } from '../../parts/calendar/calendar.module';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { LineModule } from '../../parts/line/line.module';
     BarGraphModule,
     PieModule,
     LineModule,
+    CalendarModule,
   ],
   declarations: [
     HomeComponent
