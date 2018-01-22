@@ -51,6 +51,10 @@ import { parse } from './parse';
       <div [style.display]="!firsttime ? 'block' : 'none'">
         <app-pie #pie></app-pie>
       </div>
+
+      <div [style.display]="!firsttime ? 'block' : 'none'">
+        <app-line #line></app-line>
+      </div>
       
 
     </div>
@@ -101,6 +105,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('logs') logs;
   @ViewChild('bargraph') bargraph;
   @ViewChild('pie') pie;
+  @ViewChild('line') line;
 
   firsttime = true;
   dragover;
@@ -138,6 +143,7 @@ export class HomeComponent implements OnInit {
     this.logs.update(spans);
     this.bargraph.update(spans);
     this.pie.update(spans);
+    this.line.update(spans);
   }
 
   // Event Listeners

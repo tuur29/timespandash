@@ -1,12 +1,11 @@
 
-- Implement old graphs (Line, Calendar, Box)
+- Implement old graphs (Calendar, Box)
 - Define keywords (all possible combinations) outside typescript
 - Use masonry or alternative instead of flexbox
 - Add demo to github pages with mock data
 
 Edits to (old) Graphs:
 
-- add trendlines to line graph
 - add graph for evolution of times per day
 - add seperate graph for start & end hours
 - add graph per week
