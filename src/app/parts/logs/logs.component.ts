@@ -56,7 +56,11 @@ import 'rxjs/add/operator/map';
   `,
   styles: [`
 
-    mat-expansion-panel {
+    :host ::ng-deep .mat-expansion-panel-content {
+      overflow-x: auto;
+    }
+
+    :host ::ng-deep .mat-expansion-panel-body {
       min-width: 425px;
     }
 

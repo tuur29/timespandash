@@ -2,7 +2,7 @@
 - Implement old graphs (Line, Calendar, Box)
 - Define keywords (all possible combinations) outside typescript
 - Use masonry or alternative instead of flexbox
-- Fix stats minwidth on mobile
+- Add demo to github pages with mock data
 
 Edits to (old) Graphs:
 

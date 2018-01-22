@@ -38,8 +38,12 @@ import { parse } from './parse';
   `,
   styles: [`
 
-    mat-expansion-panel {
-      min-width: 450px;
+    :host ::ng-deep .mat-expansion-panel-content {
+      overflow-x: auto;
+    }
+
+    :host ::ng-deep .mat-expansion-panel-body {
+      min-width: 425px;
     }
 
     mat-list {
