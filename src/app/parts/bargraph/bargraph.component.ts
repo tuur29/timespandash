@@ -43,7 +43,9 @@ import { parse, draw } from './helper';
       fill: #eee;
     }
     
-    :host ::ng-deep .axis line, :host ::ng-deep .axis path {
+    :host ::ng-deep .axis line,
+    :host ::ng-deep .axis path,
+    :host ::ng-deep .trendline {
       stroke: #eee;
     }
 

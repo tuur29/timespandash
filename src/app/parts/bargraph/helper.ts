@@ -215,7 +215,7 @@ export function draw(svg: any, data: any, d3: any) {
       .attr("y1",(d) => yScale(d[1]))
       .attr("x2",(d) => xScale(d[2]))
       .attr("y2",(d) => yScale(d[3]))
-      .attr("stroke", "white")
+      .attr("stroke", "black")
       .attr("stroke-width", 1)
       .attr("transform","translate(" 
         + (padding + 2*rectWidth/3 ) + "," + padding + ")");
@@ -224,7 +224,7 @@ export function draw(svg: any, data: any, d3: any) {
     // graph.append("text")
     //   .text("eq: " + round(leastSquaresCoeff[0])
     //     + "x + " + round(leastSquaresCoeff[1]))
-    //   .attr("fill", "white")
+    //   .attr("fill", "black")
     //   .attr("class", "text-label")
     //   .attr("x", (d) => xScale(x2)-60 )
     //   .attr("y", (d) => yScale(y2)-30 )
@@ -234,7 +234,7 @@ export function draw(svg: any, data: any, d3: any) {
     // // display r-square on the chart
     // graph.append("text")
     //   .text("r-sq: " + round(leastSquaresCoeff[2]))
-    //   .attr("fill", "white")
+    //   .attr("fill", "black")
     //   .attr("class", "text-label")
     //   .attr("x", (d) => xScale(x2)-60 )
     //   .attr("y", (d) => yScale(y2)-10 )
