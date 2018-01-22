@@ -96,8 +96,8 @@ export function parse(spans: Timespan[], settings?: any) {
 
   } else if (bargraph == "Years") {
     // YEARS
-    let firstyear = spans[spans.length-1].start.getFullYear();
-    let lastyear = spans[0].end.getFullYear();
+    let firstyear = spans[0].end.getFullYear();
+    let lastyear = spans[spans.length-1].start.getFullYear();
     let data = Array.from(new Array(lastyear-firstyear+1),(v,i)=>{
       return {name: i+firstyear, yVal: 0, color: color, count: 0 }
     });
@@ -122,8 +122,6 @@ export function parse(spans: Timespan[], settings?: any) {
         }
       }
     }
-
-    console.log(data);
 
     if (settings.avgvaluemon.getSetting())
       for (let i=0;i<data.length;i++)

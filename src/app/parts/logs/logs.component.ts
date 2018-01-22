@@ -111,7 +111,7 @@ export class LogsComponent implements OnInit {
 
   update(timespans: Timespan[]) {
     if (timespans != undefined)
-      this.timespans = timespans.reverse();
+      this.timespans = Timespan.cloneArray(timespans).reverse();
 
     if (!this.hide) {
       this.timespans = this.timespans;
