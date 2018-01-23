@@ -4,23 +4,31 @@ A small tool to generate statistics and graphs form a list of timestamps.
 
 ## Environment
 
-You will have to add 2 filesthat are called `/src/environments/environment(.prod).ts` with the necessary api keys and should look like this:
+You will have to add 2 files that are called `/src/environments/environment(.prod).ts` with the necessary api keys and should look like this:
 
 ```
 export const environment = {
-  production: true,
-  url: "https://<URL>:<SERVER_PORT>/<PATH>"
+    production: true,
+
+  url: "https://<URL>:<SERVER_PORT>/<PATH>?keywords=",
+  defaultKeywords: "sleep,wake",
+  allPossibleKeywords: [
+    { keywords: "boot,shut", description: "PC" },
+    { keywords: "sleep,wake", description: "Sleep" }
+  ]
 };
 ```
 
 ## Example input
 
 ```
-start at Mon Dec 26 10:01:39 GMT+1 2016
-stop at Mon Dec 26 22:55:33 GMT+1 2016
-start at Tue Dec 27 09:26:36 GMT+1 2016
-stop at Tue Dec 27 21:30:59 GMT+1 2016
+start at Mon Dec 26 10:01:39 GMT+0100 2016
+stop at Mon Dec 26 22:55:33 GMT+0100 2016
+start at Tue Dec 27 09:26:36 GMT+0100 2016
+stop at Tue Dec 27 21:30:59 GMT+0100 2016
 ```
+
+You can find a complete example dataset on the github pages branch.
 
 ## Development server
 

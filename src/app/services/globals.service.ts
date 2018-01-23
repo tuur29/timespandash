@@ -27,6 +27,8 @@ export class GlobalsService {
 
   getTimespans(keywords: string[], force = false, settings: any): Observable<Timespan[]> {
 
+    if (!(environment['url'])) return Observable.of(null);
+
     if (!force && this.cachedtimespans.length > 0
          && keywords[0] == this.cachedrequest[0]
          && keywords[1] == this.cachedrequest[1]) {
@@ -41,7 +43,7 @@ export class GlobalsService {
     
     this.loading = true;
 
-    let url = environment.url+'?'+keywords.join(",");
+    let url = environment['url']+keywords.join(",");
     return this.http.get(url)
       .map(res => {
         return this.parse(res.text(), settings, keywords);
@@ -50,9 +52,15 @@ export class GlobalsService {
   }
 
   parse(res: string, settings: any, keywords = []): Timespan[] {
-    this.cachedrequest = keywords;
-    this.cachedplaintext = res;
-    this.cachedtimespans = parse(this.cachedplaintext, settings);
+    try {
+      this.cachedtimespans = parse(res, settings);
+      this.cachedrequest = keywords;
+      this.cachedplaintext = res;
+    } catch (e) {
+      console.error(e);
+      alert("This data is not in the correct format!\nYou can find more info in the dev console or on Github.");
+    }
+
     this.loading = false;
     return Timespan.cloneArray(this.cachedtimespans)
   }

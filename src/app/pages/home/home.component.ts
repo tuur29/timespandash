@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { environment } from 'environments/environment';
 import { GlobalsService } from 'app/services/globals.service';
 import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
@@ -19,16 +20,12 @@ import { parse } from './parse';
             <mat-icon>refresh</mat-icon> Refresh Data
           </button>
 
-          <mat-form-field>
+          <mat-form-field *ngIf="allPossibleKeywords.length">
             <mat-select (change)="onKeywordsChange($event)" placeholder="Select data">
-              <mat-option value="boot,shut">PC</mat-option>
-              <mat-option value="sleep,wake">Sleep</mat-option>
-              <mat-option value="start,stop">Session</mat-option>
-              <mat-option value="all,null">All</mat-option>
+              <mat-option *ngFor="let set of allPossibleKeywords" [value]="set.keywords">{{set.description}}</mat-option>
             </mat-select>
           </mat-form-field>
           <p>Or drop a text (file) in the correct format here.</p>
-
 
           <app-settings *ngIf="!firsttime" [settings]="settings" panelName="home"
             (onSettingsChange)="onSettingsChange($event)"></app-settings>
@@ -131,13 +128,13 @@ export class HomeComponent implements OnInit {
   firsttime = true;
   dragover;
   keywords;
+  allPossibleKeywords = [];
 
   settings = {
     mergebreaks: new Setting("Merge when break smaller than","number","10", true),
     remshortenthan: new Setting("Remove sessions shorter than","number","10", true),
     lastocc: new Setting("Use last instead of first occurence"),
-    // TODO: Remove default settings for dev
-    ignbeforedate: new Setting("Ignore before date","date","2018-01-01",true),
+    ignbeforedate: new Setting("Ignore before date","date"),
     ignafterdate: new Setting("Ignore after date","date"),
   };
 
@@ -146,14 +143,18 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // TODO: Remove default dataset for dev
-    this.onKeywordsChange({value: "sleep,wake"})
+    if (environment['defaultKeywords'])
+      this.onKeywordsChange({value: environment['defaultKeywords']})
+
+    if (environment['allPossibleKeywords'])
+      this.allPossibleKeywords = environment['allPossibleKeywords'];
   }
 
   getData(keywords?: string[], force = false) {
     if (keywords == undefined) keywords = this.keywords;
     this.globals.getTimespans(keywords, force, this.settings).subscribe(timespans => {
-      this.updateAll(timespans);
+      if (timespans)
+        this.updateAll(timespans);
     });
   }
 
