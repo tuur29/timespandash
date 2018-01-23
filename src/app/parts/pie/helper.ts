@@ -2,6 +2,8 @@
 import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
 import { convertTime, formatTime, round } from 'convertTime';
+import * as _d3Tip from "d3-tip";
+
 
 export function parse(spans: Timespan[], settings?: any) {
 
@@ -104,13 +106,17 @@ export function parse(spans: Timespan[], settings?: any) {
 export function draw(svg: any, data: any, d3: any) {
 
   let padding: number = 35;
+  const d3Tip = _d3Tip.bind(d3);
 
   if (svg !== null) {
     let width: number = svg.width.baseVal.value;
     let height: number = svg.height.baseVal.value;
 
-    let graph = d3.select(svg);
-    graph.text('');
+    let tip = d3Tip().attr('class', 'd3-tip').html((d) => round(d.data.yVal));
+
+    let graph = d3.select(svg)
+      .text('')
+      .call(tip);
 
     let radius = Math.min(width, height) / 2,
         g = graph.append("g")
@@ -142,8 +148,8 @@ export function draw(svg: any, data: any, d3: any) {
     arc.append("path")
         .attr("d", path)
         .attr("fill", (d,i) => color(i))
-        .append('svg:title')
-          .text((d) => d.data.name + ": " + round(d.data.yVal) + " hours");
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
 
     arc.append("text")
         .attr("transform", (d) => "translate(" + label.centroid(d) + ")")

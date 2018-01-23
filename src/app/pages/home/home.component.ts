@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { GlobalsService } from 'app/services/globals.service';
 import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
@@ -111,6 +111,7 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('stats') stats;
   @ViewChild('logs') logs;
+  @ViewChild('logs',{read: ElementRef}) logsEl;
   @ViewChild('bargraph') bargraph;
   @ViewChild('pie') pie;
   @ViewChild('line') line;
@@ -182,6 +183,8 @@ export class HomeComponent implements OnInit {
 
   onSearchLogs(date: string) {
     this.logs.search(date);
+    console.log(this.logsEl);
+    this.logsEl.nativeElement.scrollIntoView();
   }
 
   onFileDrop(event: any) {

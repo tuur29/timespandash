@@ -1,5 +1,7 @@
+
 import { Timespan } from 'app/models/timespan';
 import { EventEmitter } from '@angular/core';
+import * as _d3Tip from "d3-tip";
 
 
 export function parse(spans: Timespan[], settings?: any) {
@@ -58,12 +60,17 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
 
   let padding = 50;
   let rowHeight = 25;
+  const d3Tip = _d3Tip.bind(d3);
 
   if (svg !== null) {
 
     let series = d3.stack()
       .keys( Array(data[0].length).fill(0).map((e,i) => e=i) )
       .offset(d3.stackOffsetNone)(data);
+
+    let tip = d3Tip().attr('class', 'd3-tip').html((d) =>
+      (d instanceof Timespan) ? d.printShort()+" = "+d.printLength() : ""
+    );
 
     let graph = d3.select(svg),
         width = svg.width.baseVal.value,
@@ -84,6 +91,7 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
     graph
       .text('')
       .attr("height",height)
+      .call(tip)
       .append("g")
         .selectAll("g")
         .data(series)
@@ -117,14 +125,9 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
             if (d instanceof Timespan && d.line > -1)
               onSpanClick.emit(d.line.toString())
           })
-          .append("title")
-            .text((d) => {
-              if (d instanceof Timespan) {
-                return d.printShort()+ " = "+d.printLength();
-              } else {
-                return "";
-              }
-            });
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide);
+          
 
     graph.append("g")
       .attr("class","axis x")

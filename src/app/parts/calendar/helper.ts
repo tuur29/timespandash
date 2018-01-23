@@ -3,6 +3,8 @@ import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
 import { convertTime, formatTime, round } from 'convertTime';
 import { EventEmitter } from '@angular/core';
+import * as _d3Tip from "d3-tip";
+
 
 export function parse(spans: Timespan[], settings?: any) {
 
@@ -37,6 +39,7 @@ export function parse(spans: Timespan[], settings?: any) {
 export function draw(svg: any, data: any, d3: any, onDayClick: EventEmitter<string>) {
   
   let padding: number = 25;
+  const d3Tip = _d3Tip.bind(d3);
 
   if (svg !== null) {
 
@@ -49,6 +52,16 @@ export function draw(svg: any, data: any, d3: any, onDayClick: EventEmitter<stri
     let height = yearHeight*(lastYear-firstYear)+padding*2;
 
     let format = d3.timeFormat("%Y-%m-%d");
+    let tip = d3Tip().attr('class', 'd3-tip').html((d) => {
+      let index = new Date(d);
+      index.setHours(0);
+      index.setMinutes(0);
+      index.setSeconds(0);
+      return d + ( data[index.getTime()] ?
+         ": "+round(data[index.getTime()].value)
+         : ""
+       )
+    });
 
     var min = 0;
     var max = 0;
@@ -64,6 +77,7 @@ export function draw(svg: any, data: any, d3: any, onDayClick: EventEmitter<stri
       .range([d3.rgb("#ff0000"), d3.rgb('#0000ff')]);
 
     let graph = d3.select(svg)
+      .call(tip)
       .attr('height', height)
       .text('');
 
@@ -91,20 +105,10 @@ export function draw(svg: any, data: any, d3: any, onDayClick: EventEmitter<stri
       .attr("x", (d) => d3.timeWeek.count(d3.timeYear(d), d) * cellSize)
       .attr("y", (d) => d.getDay() * cellSize)
       .datum(format)
-      .on("click", (d) => { onDayClick.emit(d) });
-
-    rect.append("title")
-      .text((d) => {
-        let index = new Date(d);
-        index.setHours(0);
-        index.setMinutes(0);
-        index.setSeconds(0);
-        return d + ( data[index.getTime()] ?
-           ": "+round(data[index.getTime()].value)
-           : ""
-         )
-      });
-
+      .on("click", (d) => { onDayClick.emit(d) })
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
+      
     year.selectAll(".month")
       .data((d) => d3.timeMonths(new Date(d, 0, 1), new Date(d + 1, 0, 1)))
       .enter().append("path")
