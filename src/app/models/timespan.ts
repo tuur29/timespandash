@@ -1,5 +1,5 @@
 
-import { convertTime, formatDate, formatTime, formatTimestamp } from 'convertTime';
+import { convertTime, formatDate, formatTime, formatTimestamp, formatShortTimestamp } from 'convertTime';
 
 export class Timespan {
   line: number;
@@ -44,8 +44,7 @@ export class Timespan {
   }
 
   printShort(): string {
-    // TODO: edit to: Jan 1 12:23 -> Jan 1 15:56
-    return formatTimestamp(this.start) + " → " + formatTimestamp(this.end);
+    return formatShortTimestamp(this.start) + " → " + formatShortTimestamp(this.end);
   }
 
   printFull(): string {

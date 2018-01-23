@@ -43,4 +43,9 @@ export function formatTimestamp(date: Date): string {
     return formatDate(date) + " " + formatTime(date);
 }
 
+export function formatShortTimestamp(date: Date): string {
+    let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[date.getMonth()] + " " + date.getDate() + " " + formatTime(date);
+}
+
 
