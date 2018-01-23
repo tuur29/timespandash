@@ -3,38 +3,42 @@ import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
 import { convertTime, formatTime, round } from 'convertTime';
 
+
 export function parse(spans: Timespan[], settings?: any) {
 
   // ! If you want to edit 'spans' you must clone with Timespan.cloneArray()
   let data = [];
   for (let i=0;i<spans.length;i++) {
     let span = spans[i];
-    let date = new Date(span.getCenter().toISOString().substring(0, 10));
+    let date = new Date(
+      ( settings.endcount.getSetting() ? span.end : span.start )
+      .toISOString().substring(0, 10)
+    );
 
     if (data.length < 1 || data[data.length-1].date.getTime() != date.getTime())
-      data.push({date: date, value: 0});
+      data.push({date: date, values: []});
 
-    data[data.length-1].value += settings.timescount.getSetting() ?
-      1 : span.getLength() / (60*1000); // convert to minutes
-
+    data[data.length-1].values.push( settings.endcount.getSetting() ?
+      normalize(span.end).getTime() : normalize(span.start).getTime()
+    );
   }
 
-  if (settings.avg.getSetting()) {
-    let tmpData = [];
-    for (let i=0;i<data.length;i++) {
-      if (!tmpData[Math.floor(i/settings.avg.getSetting())])
-        tmpData[Math.floor(i/settings.avg.getSetting())] = {date: data[i].date, value: 0};
-      tmpData[Math.floor(i/settings.avg.getSetting())].value +=  data[i].value;
-    }
-    data = tmpData;
-  }  
+  // grouping
+  let tmpData = [];
+  for (let i=0;i<data.length;i++) {
+    let key = Math.floor(i/settings.avg.value);
+    if (!tmpData[key])
+      tmpData[key] = {date: data[i].date, value: 0, values: []};
+    tmpData[key].values = tmpData[key].values.concat(data[i].values);
+  }
+  data = tmpData;
 
-  if (settings.cumulative.getSetting()) {
-    let total = 0;
-    for (let i in data) {
-      total += data[i].value;
-      data[i].value = total;
-    }
+  // calc averages / median
+  for (let i=0;i<data.length;i++) {
+    if (settings.median.getSetting())
+      data[i].value = data[i].values[ Math.floor(data[i].values.length/2) ];
+    else
+      data[i].value = data[i].values.reduce(((x,y) => x+y),0) / data[i].values.length;
   }
 
   return data;
@@ -67,7 +71,7 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
       .domain(d3.extent(data, (d) => d.date))
       .range([0, width]);
 
-    let y = d3.scaleLinear()
+    let y = d3.scaleTime()
       .domain(d3.extent(data, (d) => d.value))
       .range([height-2*padding/3, 0]);
 
@@ -94,26 +98,16 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
       .text('')
       .call(zoom);
 
-    let multiFormat = function(date) {
-      return (d3.timeSecond(date) < date ? d3.timeFormat(".%L")
-          : d3.timeMinute(date) < date ? d3.timeFormat(":%S")
-          : d3.timeHour(date) < date ? d3.timeFormat("%H:%M")
-          : d3.timeDay(date) < date ? d3.timeFormat("%H:00")
-          : d3.timeMonth(date) < date ? (d3.timeWeek(date) < date ? 
-              d3.timeFormat("%m-%d") : d3.timeFormat("%m-%d"))
-          : d3.timeYear(date) < date ? d3.timeFormat("%b")
-          : d3.timeFormat("%Y"))(date);
-    }
-
     let xAxis = d3.axisBottom(x)
       .ticks(20)
       .tickSize(height-2*padding/3)
       .tickPadding(10)
-      .tickFormat(multiFormat);
+      .tickFormat((d) => d3.timeHour(d).getHours()<1 ? d3.timeFormat("%m-%d")(d) : "");
 
     let yAxis = d3.axisLeft(y)
       .ticks(10)
       .tickSize(width-padding)
+      .tickFormat(d3.timeFormat("%H:%M"));
       
     graph.append("svg:clipPath")
       .attr("id", "clip")
@@ -172,8 +166,8 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
       .attr("stroke", "black")
       .attr("stroke-width", 1);
 
-      zoom.scaleTo(graph, 0.9);
-      zoom.translateTo(graph,width/2+padding/2,height/2-padding/2);
+    zoom.scaleTo(graph, 0.9);
+    zoom.translateTo(graph,width/2+padding/2,height/2-padding/2);
   }
 
   function leastSquares(xSeries, ySeries) {
@@ -199,3 +193,10 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
 
 }
 
+function normalize(d: Date): Date {
+  let date = new Date(0);
+  date.setHours(d.getHours());
+  date.setMinutes(d.getMinutes());
+  date.setSeconds(d.getSeconds());
+  return date;
+}

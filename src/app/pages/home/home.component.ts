@@ -59,6 +59,10 @@ import { parse } from './parse';
       <div [style.display]="!firsttime ? 'block' : 'none'">
         <app-line #line></app-line>
       </div>
+      
+      <div [style.display]="!firsttime ? 'block' : 'none'">
+        <app-todevolution #todevolution></app-todevolution>
+      </div>
 
       <div [style.display]="!firsttime ? 'block' : 'none'">
         <app-calendar #calendar (onDayClick)="onSearchLogs($event)"></app-calendar>
@@ -122,6 +126,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('calendar') calendar;
   @ViewChild('boxes') boxes;
   @ViewChild('radar') radar;
+  @ViewChild('todevolution') todevolution;
 
   firsttime = true;
   dragover;
@@ -156,14 +161,15 @@ export class HomeComponent implements OnInit {
     this.firsttime = false;
     let spans = parse(timespans, this.settings);
 
-    this.stats.update(spans);
-    this.logs.update(spans);
-    this.bargraph.update(spans);
-    this.pie.update(spans);
-    this.line.update(spans);
-    this.calendar.update(spans);
-    this.boxes.update(spans);
-    this.radar.update(spans);
+    try { this.stats.update(spans); } catch (e) { console.error(e); }
+    try { this.logs.update(spans); } catch (e) { console.error(e); }
+    try { this.bargraph.update(spans); } catch (e) { console.error(e); }
+    try { this.pie.update(spans); } catch (e) { console.error(e); }
+    try { this.line.update(spans); } catch (e) { console.error(e); }
+    try { this.calendar.update(spans); } catch (e) { console.error(e); }
+    try { this.boxes.update(spans); } catch (e) { console.error(e); }
+    try { this.radar.update(spans); } catch (e) { console.error(e); }
+    try { this.todevolution.update(spans); } catch (e) { console.error(e); }
   }
 
   // Event Listeners

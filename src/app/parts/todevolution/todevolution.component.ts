@@ -8,7 +8,7 @@ import { exportsvg } from 'd3helper';
 
 
 @Component({
-  selector: 'app-line',
+  selector: 'app-todevolution',
   template: `
 
   <mat-expansion-panel
@@ -18,7 +18,7 @@ import { exportsvg } from 'd3helper';
 
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <h1>Linegraph
+          <h1>Time of day Evolution
             <span *ngIf="!hide" (click)="onExport($event)"><mat-icon matTooltip="Export SVG">file_download</mat-icon></span>
           </h1>
         </mat-panel-title>
@@ -27,7 +27,7 @@ import { exportsvg } from 'd3helper';
         <!-- Content -->
         <svg width="800" height="400"></svg>
 
-        <app-settings [settings]="settings" panelName="line"
+        <app-settings [settings]="settings" panelName="todevolution"
           (onSettingsChange)="onSettingsChange($event)"></app-settings>
 
     </mat-expansion-panel>
@@ -61,16 +61,16 @@ import { exportsvg } from 'd3helper';
 
   `]
 })
-export class LineComponent implements OnInit {
+export class TODEvolutionComponent implements OnInit {
 
-  @LocalStorage("hideLine") hide = true;
+  @LocalStorage("hideTODEvolution") hide = true;
   timespans: Timespan[];
 
   options = ["curveBasis","curveLinear","curveStep","curveCardinal","curveMonotoneX","curveCatmullRom"];
   settings = {
-    timescount: new Setting("Count number of timespans instead of length"),
-    cumulative: new Setting("Show cumulative data"),
-    avg: new Setting("Average data over days","number","7"),
+    avg: new Setting("Average data over days","number","7",true),
+    median: new Setting("Use median values",undefined,undefined,true),
+    endcount: new Setting("Use end of timespan instead of start"),
     curve: new Setting("Interpolation","select",this.options[0],true,this.options),
   };
 
