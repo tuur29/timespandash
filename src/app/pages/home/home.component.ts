@@ -53,6 +53,10 @@ import { parse } from './parse';
       </div>
 
       <div [style.display]="!firsttime ? 'block' : 'none'">
+        <app-radar #radar></app-radar>
+      </div>
+
+      <div [style.display]="!firsttime ? 'block' : 'none'">
         <app-line #line></app-line>
       </div>
 
@@ -117,6 +121,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('line') line;
   @ViewChild('calendar') calendar;
   @ViewChild('boxes') boxes;
+  @ViewChild('radar') radar;
 
   firsttime = true;
   dragover;
@@ -158,6 +163,7 @@ export class HomeComponent implements OnInit {
     this.line.update(spans);
     this.calendar.update(spans);
     this.boxes.update(spans);
+    this.radar.update(spans);
   }
 
   // Event Listeners

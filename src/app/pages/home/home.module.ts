@@ -13,6 +13,7 @@ import { PieModule } from '../../parts/pie/pie.module';
 import { LineModule } from '../../parts/line/line.module';
 import { CalendarModule } from '../../parts/calendar/calendar.module';
 import { BoxesModule } from '../../parts/boxes/boxes.module';
+import { RadarModule } from '../../parts/radar/radar.module';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { BoxesModule } from '../../parts/boxes/boxes.module';
     LineModule,
     CalendarModule,
     BoxesModule,
+    RadarModule,
   ],
   declarations: [
     HomeComponent

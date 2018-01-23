@@ -112,6 +112,7 @@ mat-card.search {
 	box-shadow: 0 0 3px black;
 	color: white;
 	background: rgba(mat-color($mat-grey, 900), 0.9);
+	transition: opacity 0.2s;
 }
 
 .spacer {
