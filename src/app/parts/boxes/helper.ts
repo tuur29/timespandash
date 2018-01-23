@@ -50,13 +50,14 @@ export function parse(spans: Timespan[], settings?: any) {
 }
 
 
-// TODO: add height for each new row
+
+
 
 
 export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<string>) {
 
-  let padding = 45;
-  let barWidth = 20;
+  let padding = 50;
+  let rowHeight = 25;
 
   if (svg !== null) {
 
@@ -66,9 +67,7 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
 
     let graph = d3.select(svg),
         width = svg.width.baseVal.value,
-        height = svg.height.baseVal.value;
-
-    graph.text('');
+        height = padding*2+rowHeight*data.length;
 
     let x = d3.scaleTime()
       .domain([0, 1000*60*60*24*8]) // week
@@ -82,47 +81,50 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
 
     let colors = ["transparent","black"];
 
-    graph.append("g")
-      .selectAll("g")
-      .data(series)
-      .enter().append("g")
-        .attr("class", "group")
-        .attr("transform", "translate("+ padding +",0)")
-      .selectAll("rect")
-      .data((d,i) => { 
-        return d.map((e) => e.data[i]);
-      })
-      .enter().append("rect")
-        .attr("height", y.bandwidth)
-        .attr("y", (d,i) => y(domains[i]))
-        .attr("class", (d,i) => {
-          if (!(d instanceof Timespan) || d.line < 0) return colors[0];
-          return colors[1];
+    graph
+      .text('')
+      .attr("height",height)
+      .append("g")
+        .selectAll("g")
+        .data(series)
+        .enter().append("g")
+          .attr("class", "group")
+          .attr("transform", "translate("+ padding +",0)")
+        .selectAll("rect")
+        .data((d,i) => { 
+          return d.map((e) => e.data[i]);
         })
-        .attr("fill", (d,i) => {
-          if (!(d instanceof Timespan) || d.line < 0) return colors[0];
-          return colors[1];
-        })
-        .attr("x", (d,i) => {
-          if (!(d instanceof Timespan)) return 0;
-          return x(d.start.getTime() - getMonday(d.start).getTime());
-        })
-        .attr("width", (d,i) => {
-          if (!(d instanceof Timespan)) return 0;
-          return x(d.getLength());
-        })
-        .on("click", (d) => {
-          if (d instanceof Timespan && d.line > -1)
-            onSpanClick.emit(d.line.toString())
-        })
-        .append("title")
-          .text((d) => {
-            if (d instanceof Timespan) {
-              return d.printShort()+ " = "+d.printLength();
-            } else {
-              return "";
-            }
-          });
+        .enter().append("rect")
+          .attr("height", y.bandwidth)
+          .attr("y", (d,i) => y(domains[i]))
+          .attr("class", (d,i) => {
+            if (!(d instanceof Timespan) || d.line < 0) return colors[0];
+            return colors[1];
+          })
+          .attr("fill", (d,i) => {
+            if (!(d instanceof Timespan) || d.line < 0) return colors[0];
+            return colors[1];
+          })
+          .attr("x", (d,i) => {
+            if (!(d instanceof Timespan)) return 0;
+            return x(d.start.getTime() - getMonday(d.start).getTime());
+          })
+          .attr("width", (d,i) => {
+            if (!(d instanceof Timespan)) return 0;
+            return x(d.getLength());
+          })
+          .on("click", (d) => {
+            if (d instanceof Timespan && d.line > -1)
+              onSpanClick.emit(d.line.toString())
+          })
+          .append("title")
+            .text((d) => {
+              if (d instanceof Timespan) {
+                return d.printShort()+ " = "+d.printLength();
+              } else {
+                return "";
+              }
+            });
 
     graph.append("g")
       .attr("class","axis x")
