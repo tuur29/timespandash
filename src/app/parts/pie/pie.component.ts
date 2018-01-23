@@ -54,7 +54,7 @@ export class PieComponent implements OnInit {
     centercount: new Setting("Use center of timespan instead of start"),
     endcount: new Setting("Use end of timespan instead of start (Hours only)"),
     counteachhour: new Setting("Count each hour between start & end (Hours only)"),
-    avgvaluemon: new Setting("Weigh data based on months (Months & Years only)"),
+    avgvaluemon: new Setting("Weigh data based on months (Months & Years only)",undefined,undefined,true),
   };
 
   private d3: D3;
