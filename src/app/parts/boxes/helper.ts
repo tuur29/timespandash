@@ -50,20 +50,18 @@ export function parse(spans: Timespan[], settings?: any) {
 }
 
 
-
+// TODO: add height for each new row
 
 
 export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<string>) {
 
-  // TODO: rotate all axis
-
-  let padding = 35;
+  let padding = 45;
   let barWidth = 20;
 
   if (svg !== null) {
 
     let series = d3.stack()
-      .keys( Array(data[0].length).fill(0).map((x,i) => x=i) )
+      .keys( Array(data[0].length).fill(0).map((e,i) => e=i) )
       .offset(d3.stackOffsetNone)(data);
 
     let graph = d3.select(svg),
@@ -72,15 +70,15 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
 
     graph.text('');
 
-    let domains = [];
-    let x = d3.scaleBand()
-        .domain(data.map((d) => {domains.push(d[0]); return d[0]}))
-        .range([padding, width - padding])
-        .padding(0.3);
-
-    let y = d3.scaleTime()
+    let x = d3.scaleTime()
       .domain([0, 1000*60*60*24*8]) // week
-      .range([0,height-padding*2]);
+      .range([0,width-padding*2]);
+      
+    let domains = [];
+    let y = d3.scaleBand()
+        .domain(data.map((d) => {domains.push(d[0]); return d[0]}))
+        .range([padding, height - padding])
+        .padding(0.3);
 
     let colors = ["transparent","black"];
 
@@ -89,14 +87,14 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
       .data(series)
       .enter().append("g")
         .attr("class", "group")
-        .attr("transform", "translate(0,"+ padding +")")
+        .attr("transform", "translate("+ padding +",0)")
       .selectAll("rect")
       .data((d,i) => { 
         return d.map((e) => e.data[i]);
       })
       .enter().append("rect")
-        .attr("width", x.bandwidth)
-        .attr("x", (d,i) => x(domains[i]))
+        .attr("height", y.bandwidth)
+        .attr("y", (d,i) => y(domains[i]))
         .attr("class", (d,i) => {
           if (!(d instanceof Timespan) || d.line < 0) return colors[0];
           return colors[1];
@@ -105,15 +103,13 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
           if (!(d instanceof Timespan) || d.line < 0) return colors[0];
           return colors[1];
         })
-        .attr("y", (d,i) => {
+        .attr("x", (d,i) => {
           if (!(d instanceof Timespan)) return 0;
-          let mon = getMonday(d.start);
-          console.log(mon);
-          return y(d.start.getTime() - mon.getTime());
+          return x(d.start.getTime() - getMonday(d.start).getTime());
         })
-        .attr("height", (d,i) => {
+        .attr("width", (d,i) => {
           if (!(d instanceof Timespan)) return 0;
-          return y(d.getLength());
+          return x(d.getLength());
         })
         .on("click", (d) => {
           if (d instanceof Timespan && d.line > -1)
@@ -130,26 +126,25 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
 
     graph.append("g")
       .attr("class","axis x")
-      .attr("transform", "translate(0," + (height-padding) + ")")
+      .attr("transform", "translate(" + padding + ","+ padding +")")
       .call(
-        d3.axisBottom(x)
+        d3.axisTop(x)
+        .ticks(9)
+        .tickSize(-height+2*padding)
+        .tickFormat((d,i) => ["Tue","Wed","Thu","Fri","Sat","Sun","Mon"][i%7] )
       );
 
     graph.append("g")
       .attr("class","axis y")
-      .attr("transform", "translate(" + padding + ","+ padding +")")
+      .attr("transform", "translate(" + padding + ","+ 0 +")")
       .call(
         d3.axisLeft(y)
-          .ticks(9)
-          .tickSize(-width+2*padding)
-          .tickFormat((d,i) => ["Tue","Wed","Thu","Fri","Sat","Sun","Mon"][i%7] )
-      )
-      .append("text")
-        .attr("x", "-3")
-        .attr("y", y(y.domain()[0]) + 0.5)
+      ).append("text")
+        .attr("x", x(x.domain()[0]))
+        .attr("y", padding - 6)
         .attr("dy", "0.32em")
         .attr("fill", "#000")
-        .attr("text-anchor", "end")
+        .attr("text-anchor", "middle")
         .text("Mon");
 
   }
