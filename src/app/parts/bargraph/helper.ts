@@ -53,7 +53,8 @@ export function parse(spans: Timespan[], settings?: any) {
 
         let index = settings.centercount.getSetting() ? 
           span.getCenter().getHours()
-          : span.start.getHours();
+          : settings.endcount.getSetting() ? span.end.getDay()
+            : span.start.getHours();
         data[index].yVal += settings.timescount.getSetting() ?
           1 : span.getLength() / (60*60*1000); // convert to hours;
       }

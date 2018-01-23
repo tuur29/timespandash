@@ -58,11 +58,12 @@ export class RadarComponent implements OnInit {
   options = ["Day of week","Times of day","Months of year"];
   settings = {
     radarchart: new Setting("Select type","select",this.options[0],true,this.options),
+    smooth: new Setting("Smooth graph"),
     timescount: new Setting("Count number of timespans instead of length"),
     centercount: new Setting("Use center of timespan instead of start"),
+    endcount: new Setting("Use end of timespan instead of start (Hours only)"),
     counteachhour: new Setting("Count each hour between start & end (Hours only)"),
     avgvaluemon: new Setting("Weigh data based on months (Months & Years only)"),
-    smooth: new Setting("Smooth graph"),
   };
 
   private d3: D3;

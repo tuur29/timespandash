@@ -12,7 +12,9 @@ export function parse(spans: Timespan[], settings?: any) {
   let data = [];
   for (let i=0;i<spans.length;i++) {
     let span = spans[i];
-    let date = new Date( settings.centercount.getSetting() ? span.getCenter().toISOString() : span.start.toISOString() );
+    let date = new Date( settings.centercount.getSetting() ? span.getCenter().toISOString()
+      : settings.endcount.getSetting() ? span.end.toISOString()
+        : span.start.toISOString() );
     date.setHours(0);
     date.setMinutes(0);
     date.setSeconds(0);

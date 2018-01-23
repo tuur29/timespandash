@@ -68,7 +68,8 @@ export class CalendarComponent implements OnInit {
 
   settings = {
     timescount: new Setting("Count number of timespans instead of length"),
-    centercount: new Setting("Use center of timespan instead of start")
+    centercount: new Setting("Use center of timespan instead of start"),
+    endcount: new Setting("Use end of timespan instead of start"),
   };
 
   private d3: D3;
