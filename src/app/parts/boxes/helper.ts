@@ -180,5 +180,6 @@ function getMonday(d: Date): Date {
   mon.setHours(0);
   mon.setMinutes(0);
   mon.setSeconds(0);
+  mon.setMilliseconds(0);
   return mon;
 }

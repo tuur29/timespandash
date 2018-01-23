@@ -18,6 +18,7 @@ export function parse(spans: Timespan[], settings?: any) {
     date.setHours(0);
     date.setMinutes(0);
     date.setSeconds(0);
+    date.setMilliseconds(0);
 
     let index = date.getTime();
     if (!data[index])
@@ -59,6 +60,7 @@ export function draw(svg: any, data: any, d3: any, onDayClick: EventEmitter<stri
       index.setHours(0);
       index.setMinutes(0);
       index.setSeconds(0);
+      index.setMilliseconds(0);
       return d + ( data[index.getTime()] ?
          ": "+round(data[index.getTime()].value)
          : ""
@@ -101,7 +103,7 @@ export function draw(svg: any, data: any, d3: any, onDayClick: EventEmitter<stri
       .enter().append("rect")
       .attr("class", "day")
       .attr("fill", (d) => data[d.getTime()] ? color(data[d.getTime()].value) : "none")
-      .attr("stroke", "#444")
+      .attr("stroke", "#333")
       .attr("width", cellSize)
       .attr("height", cellSize)
       .attr("x", (d) => d3.timeWeek.count(d3.timeYear(d), d) * cellSize)
