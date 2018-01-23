@@ -39,6 +39,10 @@ export function parse(spans: Timespan[], settings?: any) {
 
   }
 
+  // clean prepended empty array elements
+  while(data[0] == undefined)
+    data.shift();
+
   // fill all weeks to same amount of spans
   let emptydate = new Date(0);
   let emptyspan = new Timespan(-1, emptydate, emptydate);
