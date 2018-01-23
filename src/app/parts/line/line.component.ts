@@ -70,6 +70,7 @@ export class LineComponent implements OnInit {
   settings = {
     timescount: new Setting("Count number of timespans instead of length"),
     cumulative: new Setting("Show cumulative data"),
+    avgweek: new Setting("Total data per week"),
     curve: new Setting("Interpolation","select",this.options[0],true,this.options),
   };
 

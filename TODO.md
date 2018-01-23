@@ -10,6 +10,5 @@
 - Fix big memory leak
 - Add density? graph for evolution of times per day
 - Add pie/radar/aster for start & end hours
-- Add option to line graph -> per week
 
 ## Check TODOs in files!

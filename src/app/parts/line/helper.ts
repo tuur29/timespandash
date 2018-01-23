@@ -19,6 +19,16 @@ export function parse(spans: Timespan[], settings?: any) {
 
   }
 
+  if (settings.avgweek.getSetting()) {
+    let tmpData = []
+    for (let i=0;i<data.length;i++) {
+      if (!tmpData[Math.floor(i/7)])
+        tmpData[Math.floor(i/7)] = {date: data[i].date, value: 0}
+      tmpData[Math.floor(i/7)].value +=  data[i].value;
+    }
+    data = tmpData;
+  }  
+
   if (settings.cumulative.getSetting()) {
     let total = 0;
     for (let i in data) {
