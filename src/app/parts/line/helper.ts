@@ -71,8 +71,8 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
       .y((d) => y(d.value));
 
     var zoom = d3.zoom()
-      .scaleExtent([0.6, 5])
-      .translateExtent([[-width*0.5, -height*0.5], [width*1.5 , height*1.5]])
+      .scaleExtent([0.5, 7.5])
+      .translateExtent([[-width*0.75, -height*0.75], [width*1.75 , height*1.75]])
       .on("zoom", () => {
         graph.select(".trendline").attr("transform", d3.event.transform);
         graph.select(".line").attr("transform", d3.event.transform);
@@ -81,15 +81,25 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
       });
 
     let graph = d3.select(svg)
+      .text('')
       .call(zoom);
 
-      graph.text('');
+    let multiFormat = function(date) {
+      return (d3.timeSecond(date) < date ? d3.timeFormat(".%L")
+          : d3.timeMinute(date) < date ? d3.timeFormat(":%S")
+          : d3.timeHour(date) < date ? d3.timeFormat("%H:%M")
+          : d3.timeDay(date) < date ? d3.timeFormat("%H:00")
+          : d3.timeMonth(date) < date ? (d3.timeWeek(date) < date ? 
+              d3.timeFormat("%m-%d") : d3.timeFormat("%m-%d"))
+          : d3.timeYear(date) < date ? d3.timeFormat("%b")
+          : d3.timeFormat("%Y"))(date);
+    }
 
     let xAxis = d3.axisBottom(x)
       .ticks(20)
       .tickSize(height-2*padding/3)
-      .tickPadding(10);
-      // .tickFormat(multiFormat);
+      .tickPadding(10)
+      .tickFormat(multiFormat);
 
     let yAxis = d3.axisLeft(y)
       .ticks(10)

@@ -70,7 +70,7 @@ export class LineComponent implements OnInit {
   settings = {
     timescount: new Setting("Count number of timespans instead of length"),
     cumulative: new Setting("Show cumulative data"),
-    curve: new Setting("Curve interpolation","select",this.options[0],true,this.options),
+    curve: new Setting("Interpolation","select",this.options[0],true,this.options),
   };
 
   private d3: D3;

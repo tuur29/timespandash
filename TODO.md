@@ -5,7 +5,6 @@
 - Make sure other graphs work if error occures on other one
 - Change pie graph to radar / aster graph?
 - Better tooltips (library?)
-- Add background to labels on linegraph + rename options (shorter)
 - Fix big memory leak
 
 Check TODO in files!
