@@ -37,7 +37,7 @@ import { parse } from './parse';
 
 
       <div [style.display]="!firsttime ? 'block' : 'none'">
-        <app-stats #stats (onStatClick)="onStatClick($event)"></app-stats>
+        <app-stats #stats (onStatClick)="onSearchLogLine($event)"></app-stats>
       </div>
 
       <div [style.display]="!firsttime ? 'block' : 'none'">
@@ -57,7 +57,11 @@ import { parse } from './parse';
       </div>
 
       <div [style.display]="!firsttime ? 'block' : 'none'">
-        <app-calendar #calendar (onDayClick)="onDayClick($event)"></app-calendar>
+        <app-calendar #calendar (onDayClick)="onSearchLogs($event)"></app-calendar>
+      </div>
+
+      <div [style.display]="!firsttime ? 'block' : 'none'">
+        <app-boxes #boxes (onSpanClick)="onSearchLogLine($event)"></app-boxes>
       </div>
       
 
@@ -111,6 +115,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('pie') pie;
   @ViewChild('line') line;
   @ViewChild('calendar') calendar;
+  @ViewChild('boxes') boxes;
 
   firsttime = true;
   dragover;
@@ -120,7 +125,8 @@ export class HomeComponent implements OnInit {
     mergebreaks: new Setting("Merge when break smaller than","number","10", true),
     remshortenthan: new Setting("Remove sessions shorter than","number","10", true),
     lastocc: new Setting("Use last instead of first occurence"),
-    ignbeforedate: new Setting("Ignore before date","date"),
+    // TODO: Remove default settings for dev
+    ignbeforedate: new Setting("Ignore before date","date","2018-01-01",true),
     ignafterdate: new Setting("Ignore after date","date"),
   };
 
@@ -129,7 +135,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // set default dataset for dev
+    // TODO: Remove default dataset for dev
     this.onKeywordsChange({value: "sleep,wake"})
   }
 
@@ -150,6 +156,7 @@ export class HomeComponent implements OnInit {
     this.pie.update(spans);
     this.line.update(spans);
     this.calendar.update(spans);
+    this.boxes.update(spans);
   }
 
   // Event Listeners
@@ -169,11 +176,11 @@ export class HomeComponent implements OnInit {
     this.getData(this.keywords);
   }
 
-  onStatClick(l: number) {
-    this.logs.search("("+l+")");
+  onSearchLogLine(l: number) {
+    this.onSearchLogs("("+l+")");
   }
 
-  onDayClick(date: string) {
+  onSearchLogs(date: string) {
     this.logs.search(date);
   }
 

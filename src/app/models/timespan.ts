@@ -1,5 +1,5 @@
 
-import { formatDate, formatTime, formatTimestamp } from 'convertTime';
+import { convertTime, formatDate, formatTime, formatTimestamp } from 'convertTime';
 
 export class Timespan {
   line: number;
@@ -43,8 +43,17 @@ export class Timespan {
     return this.printStart() + " → " + this.printEnd();
   }
 
+  printShort(): string {
+    // TODO: edit to: Jan 1 12:23 -> Jan 1 15:56
+    return formatTimestamp(this.start) + " → " + formatTimestamp(this.end);
+  }
+
   printFull(): string {
     return this.start.toString().split(" (")[0] + " → " + this.end.toString().split(" (")[0];
+  }
+
+  printLength() {
+    return convertTime(this.getLength());
   }
 
 }
