@@ -195,7 +195,6 @@ export class HomeComponent implements OnInit {
 
   onSearchLogs(date: string) {
     this.logs.search(date);
-    console.log(this.logsEl);
     this.logsEl.nativeElement.scrollIntoView();
   }
 

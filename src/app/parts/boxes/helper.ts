@@ -20,7 +20,6 @@ export function parse(spans: Timespan[], settings?: any) {
     if (span.start.getFullYear() != currentYear)
       currentYear++;
 
-    // TODO: if timespan ends in next week it isn't shown in the next week
     let weekIndex = getWeek(span.start) + (currentYear-firstYear)*52 -1;
     if (!data[weekIndex]) {
       currentWeekStart = getMonday(span.start).getTime();
