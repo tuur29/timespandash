@@ -3,8 +3,8 @@
 
 - Define keywords (all possible combinations) outside typescript
 - Add demo to github pages with mock data
-- Change pie graph to radar / aster graph?
-- Add density? graph for evolution of times per day
-- Add pie/radar/aster for start & end hours
+- Add graph to show evolution of times per day & day of week
+- Add option for Bar, Pie, Radar & Calendar to pick end time
+- Fix: Calendar user center of timespan removes half of days
 
 ## Check TODOs in files!
