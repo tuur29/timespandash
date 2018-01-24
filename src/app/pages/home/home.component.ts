@@ -20,7 +20,7 @@ import { parse } from './parse';
             <mat-icon>refresh</mat-icon> Refresh Data
           </button>
 
-          <mat-form-field *ngIf="allPossibleKeywords.length">
+          <mat-form-field *ngIf="allPossibleKeywords.length > 1">
             <mat-select (change)="onKeywordsChange($event)" placeholder="Select data">
               <mat-option *ngFor="let set of allPossibleKeywords" [value]="set.keywords">{{set.description}}</mat-option>
             </mat-select>
