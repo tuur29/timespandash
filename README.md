@@ -28,7 +28,7 @@ start at Tue Dec 27 09:26:36 GMT+0100 2016
 stop at Tue Dec 27 21:30:59 GMT+0100 2016
 ```
 
-You can find a complete example dataset on the github pages branch.
+There is also a complete test dataset calles `/sampledata.txt`.
 
 ## Development server
 
