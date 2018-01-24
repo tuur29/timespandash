@@ -80,14 +80,14 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
         height = padding*2+rowHeight*data.length;
 
     let x = d3.scaleTime()
-      .domain([0, 1000*60*60*24*8]) // week
+      .domain([0, 1000*60*60*24*7.95]) // week
       .range([0,width-padding*2]);
       
     let domains = [];
     let y = d3.scaleBand()
         .domain(data.map((d) => {domains.push(d[0]); return d[0]}))
         .range([padding, height - padding])
-        .padding(0.3);
+        .padding(0.35);
 
     let colors = ["transparent","black"];
 
@@ -138,7 +138,7 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
       .call(
         d3.axisTop(x)
         .ticks(9)
-        .tickSize(-height+2*padding)
+        .tickSize(-height+2*padding+2)
         .tickFormat((d,i) => ["Tue","Wed","Thu","Fri","Sat","Sun","Mon"][i%7] )
       );
 
