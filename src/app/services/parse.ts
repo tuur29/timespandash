@@ -4,8 +4,8 @@ import { Setting } from 'app/models/setting';
 
 
 let timezones = [
-  ["CET","GMT+1"],
-  ["CEST","GMT+2"]
+  ["CET","GMT+0100"],
+  ["CEST","GMT+0200"]
 ];
 
 export function parse(data: string, settings: any) : Timespan[] {

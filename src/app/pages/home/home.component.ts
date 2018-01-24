@@ -206,8 +206,10 @@ export class HomeComponent implements OnInit {
     var dt = event.dataTransfer;
     let text = dt.getData('Text');
 
-    if (text)
+    if (text) {
+      this.keywords = [];
       this.updateAll( this.globals.parse(text, this.settings) );
+    }
 
     if (dt.items) {
       // Use DataTransferItemList interface to access the file(s)
@@ -223,6 +225,7 @@ export class HomeComponent implements OnInit {
   private readFile(file: File) {
     let reader = new FileReader();
     reader.onload = () => {
+      this.keywords = [];
       this.updateAll( this.globals.parse(reader.result, this.settings) );
     };
     reader.readAsText(file);
