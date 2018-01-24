@@ -27,6 +27,9 @@ import { exportsvg } from 'd3helper';
         <!-- Content -->
         <svg width="800" height="400"></svg>
 
+        <app-settings [settings]="settings" panelName="boxes"
+          (onSettingsChange)="onSettingsChange($event)"></app-settings>
+
     </mat-expansion-panel>
 
   `,
@@ -52,7 +55,11 @@ import { exportsvg } from 'd3helper';
     }
 
     :host ::ng-deep .axis .tick line {
-      stroke: #888;
+      stroke: #666;
+    }
+
+    :host ::ng-deep .axis .tick:nth-of-type(even) line {
+      stroke: #aaa;
     }
     
     :host ::ng-deep .axis path {
@@ -66,6 +73,9 @@ export class BoxesComponent implements OnInit {
   @Output() onSpanClick = new EventEmitter<string>();
   @LocalStorage("hideBoxes") hide = true;
   timespans: Timespan[];
+  settings = {
+    split: new Setting("Split timespans at midnight on monday",undefined,undefined,true),
+  };
 
   private d3: D3;
   private el: any;
@@ -83,10 +93,10 @@ export class BoxesComponent implements OnInit {
       this.timespans = timespans;
 
     if (!this.hide && this.timespans.length > 0) {
-      let data = parse(this.timespans);
+      let data = parse(this.timespans,this.settings);
       let svg = this.el.querySelector("svg");
       if (svg && data)
-        draw(svg, data, this.d3, this.onSpanClick);
+        draw(svg, data, this.settings, this.d3, this.onSpanClick);
     }
   }
 
@@ -95,6 +105,11 @@ export class BoxesComponent implements OnInit {
       this.hide = false;
       this.update(undefined);
     }
+  }
+
+  onSettingsChange(settings: any) {
+    this.settings = settings;
+    this.update();
   }
 
   onExport(event) {

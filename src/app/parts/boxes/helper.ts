@@ -32,7 +32,18 @@ export function parse(spans: Timespan[], settings?: any) {
     if (data[weekIndex].length > 2)
       data[weekIndex].push( new Timespan(-1,data[weekIndex][data[weekIndex].length-1].end, span.start ) );
 
-    data[weekIndex].push( span );
+
+    if (settings.split.getSetting() && getWeek(span.end) != getWeek(span.start)) {
+      let nextWeekIndex = getWeek(span.end) + (currentYear-firstYear)*52 -1;
+      data[weekIndex].push(new Timespan(span.line,span.start, new Date(currentWeekStart+1000*60*60*24*7-1) ));
+      currentWeekStart = getMonday(span.end).getTime();
+      data[nextWeekIndex] = [
+        span.end.getFullYear()+"-"+getWeek(span.end),
+        new Timespan(span.line, new Date(getMonday(span.end).getTime()), span.end)
+      ];
+    } else {
+      data[weekIndex].push(span);
+    }
 
     if (maxTimespansInWeek < data[weekIndex].length-1)
       maxTimespansInWeek = data[weekIndex].length-1;
@@ -59,7 +70,7 @@ export function parse(spans: Timespan[], settings?: any) {
 
 
 
-export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<string>) {
+export function draw(svg: any, data: any, settings:any, d3: any, onSpanClick: EventEmitter<string>) {
 
   let padding = 50;
   let rowHeight = 25;
@@ -80,7 +91,7 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
         height = padding*2+rowHeight*data.length;
 
     let x = d3.scaleTime()
-      .domain([0, 1000*60*60*24*7.95]) // week
+      .domain([0, 1000*60*60*24*(7+(settings.split.getSetting() ? 0 : 1))]) // week
       .range([0,width-padding*2]);
       
     let domains = [];
@@ -134,12 +145,16 @@ export function draw(svg: any, data: any, d3: any, onSpanClick: EventEmitter<str
 
     graph.append("g")
       .attr("class","axis x")
-      .attr("transform", "translate(" + padding + ","+ padding +")")
+      .attr("transform", "translate(" + (padding+4) + ","+ padding +")")
       .call(
         d3.axisTop(x)
-        .ticks(9)
+        .ticks(14)
         .tickSize(-height+2*padding+2)
-        .tickFormat((d,i) => ["Tue","Wed","Thu","Fri","Sat","Sun","Mon"][i%7] )
+        .tickFormat((d,i) => {
+          if (!(i%2)) return "";
+          return ["Tue","Wed","Thu","Fri","Sat","Sun","Mon"][Math.floor(i/2)]
+        })
+        .tickSizeOuter(0)
       );
 
     graph.append("g")
