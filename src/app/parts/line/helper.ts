@@ -116,7 +116,7 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
       .tickSize(width-padding)
       
     graph.append("svg:clipPath")
-      .attr("id", "clip")
+      .attr("id", "clipline")
       .append("svg:rect")
         .attr("x", 0)
         .attr("y", 0)
@@ -137,7 +137,7 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
       .attr("width", width-padding)
       .attr("height", height-2*padding)
       .attr("transform", "translate("+padding+", 0)")
-      .attr("clip-path", "url(#clip)");
+      .attr("clip-path", "url(#clipline)");
 
     chartBody.append("svg:path")
       .datum(data)
