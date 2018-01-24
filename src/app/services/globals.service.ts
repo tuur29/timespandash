@@ -20,7 +20,7 @@ export class GlobalsService {
   ) {}
 
   @LocalStorage()
-  private cachedrequest = ['',''];
+  private cachedrequest = [];
   @LocalStorage()
   private cachedplaintext: string = "";
   private cachedtimespans: Timespan[] = [];
