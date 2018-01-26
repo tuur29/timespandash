@@ -36,10 +36,6 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The fron
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build. Add `--base-href="./"` when you are deploying to a subdirectory.
 
-### Local
-
-You can also run this app locally by opening the generated `dist/index.html` file. Alternatively you can also download the latest release on [Github](https://github.com/tuur29/timespandash/releases).
-
 ### Github Pages
 
 When building for Github Pages you should build with add: `--base-href "https://USERNAME.github.io/REPOSITORY_NAME/"`. Next, duplicate the `index.html` file and name it `404.html `.
