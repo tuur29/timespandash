@@ -34,7 +34,7 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The fron
 
 ## Build & Deploy
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build. Add `--base-href="./"` when you are deploying to a subdirectory.
+Run `ng build -prod --no-aot --base-href='./'` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ### Github Pages
 
