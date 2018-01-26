@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "tabledistribution"
+    "name": "timespansdash"
   },
   "apps": [
     {
@@ -9,6 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
+        "config.json",
         "favicon.png"
       ],
       "index": "index.html",
@@ -25,9 +26,7 @@
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts",
-        "demo": "environments/environment.demo.ts",
-        "local": "environments/environment.local.ts"
+        "prod": "environments/environment.prod.ts"
       }
     }
   ],

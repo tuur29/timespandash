@@ -2,21 +2,19 @@
 
 A small tool to generate statistics and graphs form a list of timestamps.
 
-## Environment
+## Configuration
 
-You will have to add 2 files that are called `/src/environments/environment(.prod).ts` with the necessary api keys and should look like this:
+You can edit all the settings in `/config.json`, these are all possible options:
 
 ```
-export const environment = {
-    production: true,
-
-  url: "https://<URL>:<SERVER_PORT>/<PATH>?keywords=",
-  defaultKeywords: "sleep,wake",
-  allPossibleKeywords: [
-    { keywords: "boot,shut", description: "PC" },
-    { keywords: "sleep,wake", description: "Sleep" }
+{
+  "url": "https://<URL>:<SERVER_PORT>/<PATH>?keywords=",
+  "defaultKeywords": "sleep,wake",
+  "allPossibleKeywords": [
+    { "keywords": "boot,shut", "description": "PC" },
+    { "keywords": "sleep,wake", "description": "Sleep" }
   ]
-};
+}
 ```
 
 ## Example input
@@ -36,7 +34,7 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The fron
 
 ## Build & Deploy
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build. Add `--base-href="./"` when you are deploying to a subdirectory.
 
 ### Local
 
