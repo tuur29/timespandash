@@ -59,12 +59,12 @@ export class BarGraphComponent implements OnInit {
 
   options = ["Day of week","Times of day","Months of year","Years"];
   settings = {
-    bargraph: new Setting("Select type","select",this.options[0],true,this.options),
-    timescount: new Setting("Count number of timespans instead of length"),
-    centercount: new Setting("Use center of timespan instead of start"),
-    endcount: new Setting("Use end of timespan instead of start (Hours only)"),
-    counteachhour: new Setting("Count each hour between start & end (Hours only)",undefined,undefined,true),
-    avgvaluemon: new Setting("Weigh data based on months (Months & Years only)",undefined,undefined,true),
+    bargraph: new Setting("bargraph","Select type","select",this.options),
+    timescount: new Setting("timescount","Count number of timespans instead of length"),
+    centercount: new Setting("centercount","Use center of timespan instead of start"),
+    endcount: new Setting("endcount","Use end of timespan instead of start (Hours only)"),
+    counteachhour: new Setting("counteachhour","Count each hour between start & end (Hours only)"),
+    avgvaluemon: new Setting("avgvaluemon","Weigh data based on months (Months & Years only)"),
   };
 
   private d3: D3;

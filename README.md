@@ -13,9 +13,18 @@ You can edit all the settings in `/config.json`, these are all possible options:
   "allPossibleKeywords": [
     { "keywords": "boot,shut", "description": "PC" },
     { "keywords": "sleep,wake", "description": "Sleep" }
-  ]
+  ],
+  "settings": {
+		"mergebreaks": { "enabled": true, "value": "10" },
+		"remshortenthan": { "enabled": true, "value": "10" },
+		"split": {"enabled": true },
+		"avg": {"value": "7" },
+		"median": {"enabled": true }
+	}
 }
 ```
+
+You can find additional settings by searching for 'new Setting' in this repo: [link](https://github.com/search?utf8=%E2%9C%93&q=%22new+Setting%22+repo%3Atuur29%2Ftimespandash&type=Code).
 
 ## Example input
 

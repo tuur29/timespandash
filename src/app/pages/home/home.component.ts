@@ -131,11 +131,11 @@ export class HomeComponent implements OnInit {
   allPossibleKeywords = [];
 
   settings = {
-    mergebreaks: new Setting("Merge when break smaller than","number","10", true),
-    remshortenthan: new Setting("Remove sessions shorter than","number","10", true),
-    lastocc: new Setting("Use last instead of first occurence"),
-    ignbeforedate: new Setting("Ignore before date","date"),
-    ignafterdate: new Setting("Ignore after date","date"),
+    mergebreaks: new Setting("mergebreaks","Merge when break smaller than","number"),
+    remshortenthan: new Setting("remshortenthan","Remove sessions shorter than","number"),
+    lastocc: new Setting("lastocc","Use last instead of first occurence"),
+    ignbeforedate: new Setting("ignbeforedate","Ignore before date","date"),
+    ignafterdate: new Setting("ignafterdate","Ignore after date","date"),
   };
 
   constructor(

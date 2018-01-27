@@ -68,10 +68,10 @@ export class TODEvolutionComponent implements OnInit {
 
   options = ["curveBasis","curveLinear","curveStep","curveCardinal","curveMonotoneX","curveCatmullRom"];
   settings = {
-    avg: new Setting("Average data over days","number","7",true),
-    median: new Setting("Use median values",undefined,undefined,true),
-    endcount: new Setting("Use end of timespan instead of start"),
-    curve: new Setting("Interpolation","select",this.options[0],true,this.options),
+    curve: new Setting("curve","Interpolation","select",this.options),
+    avg: new Setting("avg","Average data over days","number"),
+    median: new Setting("median","Use median values"),
+    endcount: new Setting("endcount","Use end of timespan instead of start")
   };
 
   private d3: D3;

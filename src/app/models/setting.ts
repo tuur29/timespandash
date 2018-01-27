@@ -1,5 +1,8 @@
 
+import { environment } from 'environments/environment';
+
 export class Setting {
+  name: string;
   enabled: boolean;
   description: string;
 
@@ -11,20 +14,29 @@ export class Setting {
   private initialValue: string;
 
   constructor(
+    name: string,
     description: string,
-    type?: string, value?: string, enabled?: boolean, options?: any[],
-    initialEnabled?: boolean, initialValue?: string)
-  {
+    type?: string, options?: any[],
+    initialEnabled?: boolean, initialValue?: string
+  ) {
 
+    this.name = name;
     this.description = description;
-    this.enabled = enabled ? enabled : false;
+    this.enabled = false;
     this.type = type ? type : "";
-    this.value = value ? value : "";
     this.options = options ? options : [];
+    this.value = this.type=="number" ? 0
+      : (this.type=="select" ? this.options[0] : "");
+
+    if (environment['settings'] && environment['settings'][name]) {
+      if (environment['settings'][name]['enabled'])
+        this.enabled = environment['settings'][name]['enabled'];
+      if (environment['settings'][name]['value'])
+        this.value = environment['settings'][name]['value'];
+    }
 
     this.initialEnabled = initialEnabled ? initialEnabled : this.enabled;
     this.initialValue = initialValue ? initialValue : this.value;
-    
   }
 
   getSetting(): any{
@@ -42,7 +54,7 @@ export class Setting {
   
   static fromJSON(string: string) {
     let json = JSON.parse(string);
-    return new Setting(json.description, json.type, json.value, json.enabled, json.options, json.initialEnabled, json.initialValue);
+    return new Setting(json.name, json.description, json.type, json.options, json.initialEnabled, json.initialValue);
   }
 
 }

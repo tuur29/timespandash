@@ -68,10 +68,10 @@ export class LineComponent implements OnInit {
 
   options = ["curveBasis","curveLinear","curveStep","curveCardinal","curveMonotoneX","curveCatmullRom"];
   settings = {
-    timescount: new Setting("Count number of timespans instead of length"),
-    cumulative: new Setting("Show cumulative data"),
-    avg: new Setting("Average data over days","number","7"),
-    curve: new Setting("Interpolation","select",this.options[0],true,this.options),
+    curve: new Setting("curve","Interpolation","select",this.options),
+    timescount: new Setting("timescount","Count number of timespans instead of length"),
+    cumulative: new Setting("cumulative","Show cumulative data"),
+    avg: new Setting("avg","Average data over days","number")
   };
 
   private d3: D3;

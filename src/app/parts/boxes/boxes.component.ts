@@ -74,7 +74,7 @@ export class BoxesComponent implements OnInit {
   @LocalStorage("hideBoxes") hide = true;
   timespans: Timespan[];
   settings = {
-    split: new Setting("Split timespans at midnight on monday",undefined,undefined,true),
+    split: new Setting("split","Split timespans at midnight on monday"),
   };
 
   private d3: D3;
