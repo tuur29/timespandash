@@ -25,19 +25,11 @@ export class GlobalsService {
   private cachedrequest = [];
   @LocalStorage()
   private cachedplaintext: string = "";
-  private cachedtimespans: Timespan[] = [];
 
   getTimespans(keywords: string[], force = false, settings: any): Observable<Timespan[]> {
 
     if (!(environment['url'])) return Observable.of(null);
-
-    if (!force && this.cachedtimespans.length > 0
-         && (new Date()).getTime() - this.cachedtimestamp < 1000*60*60*24
-         && keywords[0] == this.cachedrequest[0]
-         && keywords[1] == this.cachedrequest[1]) {
-      return Observable.of( Timespan.cloneArray(this.cachedtimespans) );
-    }
-
+    
     if (!force && this.cachedplaintext != ""
          && (new Date()).getTime() - this.cachedtimestamp < 1000*60*60*24
          && keywords[0] == this.cachedrequest[0]
@@ -58,16 +50,15 @@ export class GlobalsService {
 
   parse(res: string, settings: any, keywords = []): Timespan[] {
     try {
-      this.cachedtimespans = parse(res, settings);
+      let timespans = parse(res, settings);
       this.cachedrequest = keywords;
       this.cachedplaintext = res;
+      this.loading = false;
+      return timespans;
     } catch (e) {
       console.error(e);
       alert("This data is not in the correct format!\nYou can find more info in the dev console or on Github.");
     }
-
-    this.loading = false;
-    return Timespan.cloneArray(this.cachedtimespans)
   }
 
 }
