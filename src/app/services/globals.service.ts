@@ -50,6 +50,7 @@ export class GlobalsService {
     let url = environment['url']+keywords.join(",");
     return this.http.get(url)
       .map(res => {
+        this.cachedtimestamp = (new Date()).getTime();
         return this.parse(res.text(), settings, keywords);
       }).catch((err: Response) => Observable.throw(err.json()) );
 
@@ -60,7 +61,6 @@ export class GlobalsService {
       this.cachedtimespans = parse(res, settings);
       this.cachedrequest = keywords;
       this.cachedplaintext = res;
-      this.cachedtimestamp = (new Date()).getTime();
     } catch (e) {
       console.error(e);
       alert("This data is not in the correct format!\nYou can find more info in the dev console or on Github.");
