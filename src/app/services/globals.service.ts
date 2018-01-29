@@ -46,12 +46,10 @@ export class GlobalsService {
     }
     
     this.loading = true;
-    console.log("load");
 
     let url = environment['url']+keywords.join(",");
     return this.http.get(url)
       .map(res => {
-        console.log("loaded");
         return this.parse(res.text(), settings, keywords);
       }).catch((err: Response) => Observable.throw(err.json()) );
 
