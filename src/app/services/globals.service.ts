@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
 import { LocalStorage } from 'ngx-store';
 import { MessagesService } from '../messages/messages.service';
 import { Timespan } from 'app/models/timespan';
