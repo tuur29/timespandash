@@ -3,7 +3,7 @@
 read -n1 -rep $'\nPress key if there are no uncommited changes\n' key
 rm -rf dist
 sed -i -e 's/\/dist/#\/dist/g' .gitignore
-ng build -prod --base-href "./"
+ng build -prod --aot=false --base-href "./"
 read -n1 -rep $'\nPress key if angular app has build successfully\n' key
 cp "dist/index.html" "dist/404.html"
 

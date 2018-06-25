@@ -35,7 +35,7 @@ start at Tue Dec 27 09:26:36 GMT+0100 2016
 stop at Tue Dec 27 21:30:59 GMT+0100 2016
 ```
 
-There is also a complete test dataset calles `/sampledata.txt`.
+There is also a complete test dataset called `/sampledata.txt`.
 
 ## Development server
 
