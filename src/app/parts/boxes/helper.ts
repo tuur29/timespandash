@@ -82,9 +82,15 @@ export function draw(svg: any, data: any, settings:any, d3: any, onSpanClick: Ev
       .keys( Array(data[0].length).fill(0).map((e,i) => e=i) )
       .offset(d3.stackOffsetNone)(data);
 
-    let tip = d3Tip().attr('class', 'd3-tip').html((d) =>
-      (d instanceof Timespan) ? d.printShort()+" = "+d.printLength() : ""
-    );
+    let tip = d3Tip().attr('class', 'd3-tip').html((d) => {
+      if (d instanceof Timespan) {
+        let string = d.printShort()+" = "+d.printLength();
+        if (d.line > -1)
+          return string;
+        return "<span style='opacity:0.65'>("+string+")</span>";
+      }
+      return "";
+    });
 
     let graph = d3.select(svg),
         width = svg.width.baseVal.value,
