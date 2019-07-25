@@ -131,8 +131,8 @@ export class HomeComponent implements OnInit {
   allPossibleKeywords = [];
 
   settings = {
-    mergebreaks: new Setting("mergebreaks","Merge when break smaller than","number"),
-    remshortenthan: new Setting("remshortenthan","Remove sessions shorter than","number"),
+    mergebreaks: new Setting("mergebreaks","Merge when break smaller than","minute"),
+    remshortenthan: new Setting("remshortenthan","Remove sessions shorter than","minute"),
     lastocc: new Setting("lastocc","Use last instead of first occurence"),
     ignbeforedate: new Setting("ignbeforedate","Ignore before date","date"),
     ignafterdate: new Setting("ignafterdate","Ignore after date","date"),

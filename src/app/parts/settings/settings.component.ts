@@ -39,10 +39,10 @@ import { Setting } from 'app/models/setting';
                 </mat-select>
 
                 <ng-template #fallback>
-                  <input matInput [type]="settings[i].type" [value]="settings[i].value" [disabled]="!settings[i].enabled" (change)="onValueChange(i, $event)" />
+                  <input matInput [type]="settings[i].type == 'minute' ? 'number' : settings[i].type" [value]="settings[i].value" [disabled]="!settings[i].enabled" (change)="onValueChange(i, $event)" />
                 </ng-template>
               </mat-form-field>
-              <ng-container *ngIf="settings[i].type == 'number'">min</ng-container>
+              <ng-container *ngIf="settings[i].type == 'minute'">min</ng-container>
 
             </div>
 
