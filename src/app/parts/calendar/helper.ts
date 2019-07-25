@@ -78,7 +78,7 @@ export function draw(svg: any, data: any, d3: any, onDayClick: EventEmitter<stri
 
     var color = d3.scaleLinear().domain([Math.floor(min),Math.ceil(max)])
       .interpolate(d3.interpolateHcl)
-      .range([d3.rgb("#ff0000"), d3.rgb('#0000ff')]);
+      .range([d3.rgb("#0000ff"), d3.rgb('#ff0000')]);
 
     let graph = d3.select(svg)
       .call(tip)
