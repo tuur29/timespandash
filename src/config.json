@@ -8,6 +8,7 @@
 		"avgvaluemon": {"enabled": true },
 		"split": {"enabled": true },
 		"avg": {"value": "7" },
-		"median": {"enabled": true }
+		"median": {"enabled": true },
+		"percentages": {"enabled": true }
 	}
 }

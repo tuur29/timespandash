@@ -104,16 +104,19 @@ export function parse(spans: Timespan[], settings?: any) {
 
 
 
-export function draw(svg: any, data: any, d3: any) {
+export function draw(svg: any, data: any, settings: any, d3: any) {
 
   let padding: number = 35;
   const d3Tip = _d3Tip.bind(d3);
+  const total = data.reduce((a, c) => a += parseInt(c.yVal), 0);
 
   if (svg !== null) {
     let width: number = svg.width.baseVal.value;
     let height: number = svg.height.baseVal.value;
 
-    let tip = d3Tip().attr('class', 'd3-tip').html((d) => round(d.data.yVal));
+    let tip = d3Tip().attr('class', 'd3-tip').html((d) => settings.percentages.getSetting()
+      ? round(d.data.yVal / total*100) + "%"
+      : round(d.data.yVal));
 
     let graph = d3.select(svg)
       .text('')

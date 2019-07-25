@@ -52,6 +52,7 @@ export class PieComponent implements OnInit {
     piechart: new Setting("piechart","Select type","select",this.options),
     timescount: new Setting("timescount","Count number of timespans instead of length"),
     centercount: new Setting("centercount","Use center of timespan instead of start"),
+    percentages: new Setting("percentages","Show percentages in tooltips"),
     endcount: new Setting("endcount","Use end of timespan instead of start (Hours only)"),
     counteachhour: new Setting("counteachhour","Count each hour between start & end (Hours only)"),
     avgvaluemon: new Setting("avgvaluemon","Weigh data based on months (Months only)")
@@ -75,8 +76,8 @@ export class PieComponent implements OnInit {
     if (!this.hide && this.timespans.length > 0) {
       let data = parse(this.timespans, this.settings);
       let svg = this.el.querySelector("svg");
-      if (svg && data){
-        draw(svg, data, this.d3);
+      if (svg && data) {
+        draw(svg, data, this.settings, this.d3);
       }
     }
   }
