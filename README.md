@@ -43,7 +43,7 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The fron
 
 ## Build & Deploy
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build --prod -prod --no-aot --aot=false --base-href ./` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ### Github Pages
 
