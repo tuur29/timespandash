@@ -57,9 +57,13 @@ export function parse(spans: Timespan[], settings?: any) {
   // fill all weeks to same amount of spans
   let emptydate = new Date(0);
   let emptyspan = new Timespan(-1, emptydate, emptydate);
-  for (let i=0;i<data.length;i++)
+  for (let i=0;i<data.length;i++) {
+    if (!data[i])
+      data[i] = [];
     while (data[i].length <= maxTimespansInWeek)
       data[i].push(emptyspan);
+
+  }
 
   return data;
 
