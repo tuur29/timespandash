@@ -27,7 +27,7 @@ export function parse(spans: Timespan[], settings?: any) {
       tmpData[Math.floor(i/settings.avg.getSetting())].value +=  data[i].value;
     }
     data = tmpData;
-  }  
+  }
 
   if (settings.cumulative.getSetting()) {
     let total = 0;
@@ -35,6 +35,11 @@ export function parse(spans: Timespan[], settings?: any) {
       total += data[i].value;
       data[i].value = total;
     }
+  }
+
+  if (settings.compareavg.getSetting()) {
+    const avg = data.reduce((sum, day) => sum+day.value, 0) / data.length;
+    data = data.map(day => ({ ...day, value: avg - day.value }));
   }
 
   return data;

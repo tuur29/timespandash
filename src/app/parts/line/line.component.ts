@@ -71,6 +71,7 @@ export class LineComponent implements OnInit {
     curve: new Setting("curve","Interpolation","select",this.options),
     timescount: new Setting("timescount","Count number of timespans instead of length"),
     cumulative: new Setting("cumulative","Show cumulative data"),
+    compareavg: new Setting("compareavg","Compare with average"),
     avg: new Setting("avg","Average data over days","number")
   };
 
