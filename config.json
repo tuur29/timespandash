@@ -1,0 +1,14 @@
+{
+	"url": "https://raw.githubusercontent.com/tuur29/timespandash/master/sampledata.txt?",
+	"defaultKeywords": ",",
+	"settings": {
+		"mergebreaks": { "enabled": true, "value": "10" },
+		"remshortenthan": { "enabled": true, "value": "10" },
+		"counteachhour": {"enabled": true },
+		"avgvaluemon": {"enabled": true },
+		"split": {"enabled": true },
+		"avg": {"value": "7" },
+		"median": {"enabled": true },
+		"percentages": {"enabled": true }
+	}
+}
