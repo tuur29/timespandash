@@ -48,4 +48,10 @@ export function formatShortTimestamp(date: Date): string {
     return months[date.getMonth()] + " " + date.getDate() + " " + formatTime(date);
 }
 
-
+export function getAbsoluteTimeUnit(settingValue: string): number {
+    if (settingValue === "minute") return 60*1000;
+    if (settingValue === "hour") return 60*60*1000;
+    if (settingValue === "day") return 24*60*60*1000;
+    if (settingValue === "week") return 7*24*60*60*1000;
+    return 0; // error
+}

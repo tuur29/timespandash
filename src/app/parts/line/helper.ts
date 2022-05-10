@@ -1,7 +1,7 @@
 
 import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
-import { convertTime, formatTime, round } from 'src/convertTime';
+import { convertTime, formatTime, round, getAbsoluteTimeUnit } from 'src/convertTime';
 
 export function parse(spans: Timespan[], settings?: Record<string, Setting>) {
 
@@ -15,7 +15,7 @@ export function parse(spans: Timespan[], settings?: Record<string, Setting>) {
       data.push({date: date, value: 0});
 
     data[data.length-1].value += settings.timescount.getSetting() ?
-      1 : span.getLength() / (60*1000); // convert to minutes
+      1 : span.getLength() / getAbsoluteTimeUnit(settings.timeunit.getSetting());
 
   }
 

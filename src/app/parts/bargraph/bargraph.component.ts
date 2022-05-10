@@ -57,13 +57,13 @@ export class BarGraphComponent implements OnInit {
   @LocalStorage("hideBarGraph") hide = true;
   timespans: Timespan[];
 
-  options = ["Day of week","Times of day","Months of year","Years"];
   settings = {
-    bargraph: new Setting("bargraph","Select type","select",this.options),
+    bargraph: new Setting("bargraph","Select type","select",["Day of week","Times of day","Months of year","Years"],true),
+    timeunit: new Setting("timeunit","Time unit","select",["minute","hour","day","week"],true,"day"),
     timescount: new Setting("timescount","Count number of timespans instead of length"),
     centercount: new Setting("centercount","Use center of timespan instead of start"),
-    endcount: new Setting("endcount","Use end of timespan instead of start (Hours only)"),
-    counteachhour: new Setting("counteachhour","Count each hour between start & end (Hours only)"),
+    endcount: new Setting("endcount","Use end of timespan instead of start (ToD only)"),
+    counteachhour: new Setting("counteachhour","Count each hour between start & end (ToD only)"),
     avgvaluemon: new Setting("avgvaluemon","Weigh data based on months (Months & Years only)"),
   };
 

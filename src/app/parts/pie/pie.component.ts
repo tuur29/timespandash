@@ -47,9 +47,9 @@ export class PieComponent implements OnInit {
   @LocalStorage("hidePie") hide = true;
   timespans: Timespan[];
 
-  options = ["Day of week","Times of day","Months of year"];
   settings = {
-    piechart: new Setting("piechart","Select type","select",this.options),
+    piechart: new Setting("piechart","Select type","select",["Day of week","Times of day","Months of year"], true),
+    timeunit: new Setting("timeunit","Time unit","select",["minute","hour","day","week"],true,"day"),
     timescount: new Setting("timescount","Count number of timespans instead of length"),
     centercount: new Setting("centercount","Use center of timespan instead of start"),
     percentages: new Setting("percentages","Show percentages in tooltips"),

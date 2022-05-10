@@ -37,6 +37,7 @@ export class Setting {
 
     this.initialEnabled = initialEnabled ? initialEnabled : this.enabled;
     this.initialValue = initialValue ? initialValue : this.value;
+    if (initialEnabled && type === "select") this.value = initialValue ? initialValue : options[0];
   }
 
   getSetting(): any{

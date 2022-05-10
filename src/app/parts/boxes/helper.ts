@@ -56,14 +56,17 @@ export function parse(spans: Timespan[], settings?: Record<string, Setting>) {
     data.shift();
 
   // fill all weeks to same amount of spans
+  let breakCount = 0;
   let emptydate = new Date(0);
   let emptyspan = new Timespan(-1, emptydate, emptydate);
   for (let i=0;i<data.length;i++) {
-    if (!data[i])
-      data[i] = [];
-    while (data[i].length <= maxTimespansInWeek)
+    if (!data[i]) {
+      breakCount += 1;
+      data[i] = [`Break ${breakCount}`];
+    }
+    while (data[i].length <= maxTimespansInWeek) {
       data[i].push(emptyspan);
-
+    }
   }
 
   return data;

@@ -55,9 +55,9 @@ export class RadarComponent implements OnInit {
   @LocalStorage("hideRadar") hide = true;
   timespans: Timespan[];
 
-  options = ["Day of week","Times of day","Months of year"];
   settings = {
-    radarchart: new Setting("radarchart","Select type","select",this.options),
+    radarchart: new Setting("radarchart","Select type","select",["Day of week","Times of day","Months of year"],true),
+    timeunit: new Setting("timeunit","Time unit","select",["minute","hour","day","week"],true,"day"),
     smooth: new Setting("smooth","Smooth graph"),
     timescount: new Setting("timescount","Count number of timespans instead of length"),
     centercount: new Setting("centercount","Use center of timespan instead of start"),

@@ -28,10 +28,11 @@ import { Setting } from 'app/models/setting';
                 {{ settings[i].description }}
               </mat-checkbox>
 
-              <mat-form-field *ngIf="settings[i].type">
+              <mat-form-field *ngIf="settings[i].type" [class.small]="settings[i].type==='minute'||settings[i].type==='number'">
 
                 <mat-select *ngIf="settings[i].type=='select'; else fallback"
                   (change)="onSelect(i, $event)"
+                  [value]="settings[i].initialEnabled ? settings[i].initialValue : undefined"
                   [placeholder]="settings[i].description">
                   <mat-option *ngFor="let j of settings[i].options" [value]="j">
                     {{j}}
@@ -80,6 +81,10 @@ import { Setting } from 'app/models/setting';
     mat-form-field {
       margin-left: 30px;
       max-width: 135px;
+    }
+
+    mat-form-field.small {
+      max-width: 60px;
     }
 
   `]

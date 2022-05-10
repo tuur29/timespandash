@@ -66,9 +66,8 @@ export class TODEvolutionComponent implements OnInit {
   @LocalStorage("hideTODEvolution") hide = true;
   timespans: Timespan[];
 
-  options = ["curveBasis","curveLinear","curveStep","curveCardinal","curveMonotoneX","curveCatmullRom"];
   settings = {
-    curve: new Setting("curve","Interpolation","select",this.options),
+    curve: new Setting("curve","Interpolation","select",["curveBasis","curveLinear","curveStep","curveCardinal","curveMonotoneX","curveCatmullRom"],true),
     avg: new Setting("avg","Average data over days","number"),
     median: new Setting("median","Use median values"),
     endcount: new Setting("endcount","Use end of timespan instead of start")

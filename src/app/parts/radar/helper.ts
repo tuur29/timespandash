@@ -1,7 +1,7 @@
 
 import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
-import { convertTime, formatTime, round } from 'src/convertTime';
+import { convertTime, formatTime, round, getAbsoluteTimeUnit } from 'src/convertTime';
 import { RadarChart } from "./RadarChart";
 
 
@@ -30,7 +30,7 @@ export function parse(spans: Timespan[], settings?: Record<string, Setting>) {
         : span.start.getDay();
 
       data[index].value += settings.timescount.getSetting() ?
-        1 : span.getLength() / (60*60*1000); // convert to hours;
+        1 : span.getLength() / getAbsoluteTimeUnit(settings.timeunit.getSetting());
     }
 
     return [data];
@@ -55,7 +55,7 @@ export function parse(spans: Timespan[], settings?: Record<string, Setting>) {
           : settings.endcount.getSetting() ? span.end.getDay()
             : span.start.getHours();
         data[index].value += settings.timescount.getSetting() ?
-          1 : span.getLength() / (60*60*1000); // convert to hours;
+          1 : span.getLength() / getAbsoluteTimeUnit(settings.timeunit.getSetting());
       }
     }
 
@@ -81,7 +81,7 @@ export function parse(spans: Timespan[], settings?: Record<string, Setting>) {
         : span.start.getMonth();
 
       data[index].value += settings.timescount.getSetting() ?
-        1 : span.getLength() / (60*60*1000); // convert to hours;
+        1 : span.getLength() / getAbsoluteTimeUnit(settings.timeunit.getSetting());
 
       if (settings.avgvaluemon.getSetting() && prevMonth != index) {
         data[index].count++;

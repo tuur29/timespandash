@@ -66,9 +66,9 @@ export class LineComponent implements OnInit {
   @LocalStorage("hideLine") hide = true;
   timespans: Timespan[];
 
-  options = ["curveBasis","curveLinear","curveStep","curveCardinal","curveMonotoneX","curveCatmullRom"];
   settings = {
-    curve: new Setting("curve","Interpolation","select",this.options),
+    curve: new Setting("curve","Interpolation","select",["curveBasis","curveLinear","curveStep","curveCardinal","curveMonotoneX","curveCatmullRom"],true),
+    timeunit: new Setting("timeunit","Time unit","select",["minute","hour","day","week"],true,"hour"),
     timescount: new Setting("timescount","Count number of timespans instead of length"),
     cumulative: new Setting("cumulative","Show cumulative data"),
     compareavg: new Setting("compareavg","Compare with average"),
