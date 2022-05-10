@@ -1,10 +1,11 @@
 
 import { Timespan } from 'app/models/timespan';
+import { Setting } from 'app/models/setting';
 import { EventEmitter } from '@angular/core';
 import * as _d3Tip from "d3-tip";
 
 
-export function parse(spans: Timespan[], settings?: any) {
+export function parse(spans: Timespan[], settings?: Record<string, Setting>) {
 
   // ! If you want to edit 'spans' you must clone with Timespan.cloneArray()
 

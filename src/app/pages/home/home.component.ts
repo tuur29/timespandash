@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { environment } from 'environments/environment';
+import { environment } from 'src/environments/environment';
 import { GlobalsService } from 'app/services/globals.service';
 import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';

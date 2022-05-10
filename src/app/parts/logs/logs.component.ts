@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorage } from 'ngx-store';
-import { removeDiacritics } from 'removeDiacritics';
+import { removeDiacritics } from 'src/removeDiacritics';
 import { Timespan } from 'app/models/timespan';
 
 import { FormControl } from '@angular/forms';

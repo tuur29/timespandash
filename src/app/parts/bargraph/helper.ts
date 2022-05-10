@@ -1,11 +1,11 @@
 
 import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
-import { convertTime, formatTime, round } from 'convertTime';
+import { convertTime, formatTime, round } from 'src/convertTime';
 import * as _d3Tip from "d3-tip";
 
 
-export function parse(spans: Timespan[], settings?: any) {
+export function parse(spans: Timespan[], settings?: Record<string, Setting>) {
 
   // ! If you want to edit 'spans' you must clone with Timespan.cloneArray()
   let color = "#26A69A";

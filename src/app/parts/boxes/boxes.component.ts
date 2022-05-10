@@ -4,7 +4,7 @@ import { D3Service, D3 } from 'd3-ng2-service';
 import { Timespan } from 'app/models/timespan';
 import { Setting } from 'app/models/setting';
 import { parse, draw } from './helper';
-import { exportsvg } from 'd3helper';
+import { exportsvg } from 'src/d3helper';
 
 
 @Component({

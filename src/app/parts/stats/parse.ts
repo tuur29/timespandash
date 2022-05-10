@@ -1,7 +1,7 @@
 
 import { Timespan } from 'app/models/timespan';
 import { Stat } from './stats.component';
-import { convertTime, formatTime, round } from 'convertTime';
+import { convertTime, formatTime, round } from 'src/convertTime';
 
 
 function calcMedian(arr) {

@@ -1,5 +1,5 @@
 
-import { convertTime, formatDate, formatTime, formatTimestamp, formatShortTimestamp } from 'convertTime';
+import { convertTime, formatDate, formatTime, formatTimestamp, formatShortTimestamp } from 'src/convertTime';
 
 export class Timespan {
   line: number;
