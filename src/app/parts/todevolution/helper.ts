@@ -87,7 +87,7 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
       .y((d) => y(d.value));
 
     var zoom = d3.zoom()
-      .scaleExtent([0.5, 7.5])
+      .scaleExtent([0.5, 15])
       .translateExtent([[-width*0.75, -height*0.75], [width*1.75 , height*1.75]])
       .on("zoom", () => {
         graph.select(".trendline").attr("transform", d3.event.transform);
@@ -196,9 +196,10 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
 }
 
 function normalize(d: Date): Date {
-  let date = new Date(0);
+  let date = new Date(0); // jan 1 1970
   date.setHours(d.getHours());
   date.setMinutes(d.getMinutes());
   date.setSeconds(d.getSeconds());
+  if (d.getHours() <= 12) date.setDate(2);
   return date;
 }

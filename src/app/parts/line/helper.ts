@@ -39,7 +39,7 @@ export function parse(spans: Timespan[], settings?: Record<string, Setting>) {
 
   if (settings.compareavg.getSetting()) {
     const avg = data.reduce((sum, day) => sum+day.value, 0) / data.length;
-    data = data.map(day => ({ ...day, value: avg - day.value }));
+    data = data.map(day => ({ ...day, value: day.value - avg }));
   }
 
   return data;
@@ -86,7 +86,7 @@ export function draw(svg: any, data: any, d3: any, settings: any) {
       .y((d) => y(d.value));
 
     var zoom = d3.zoom()
-      .scaleExtent([0.5, 7.5])
+      .scaleExtent([0.5, 15])
       .translateExtent([[-width*0.75, -height*0.75], [width*1.75 , height*1.75]])
       .on("zoom", () => {
         graph.select(".trendline").attr("transform", d3.event.transform);
